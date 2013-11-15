@@ -1,0 +1,24 @@
+<div class="page-header">
+    <h2>Editar Produto</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($products_index_path(), 'Lista de Tipos de produtos'); ?></li>
+        <li><?= link_to($products_destroy_path($product->id->getValue()), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?=$products_update_path($product->id->getValue())?>" method="POST">
+
+        <?=text_area($product->description, array('name'=>'product', 'title'=>'Descrição', 'placeholder'=>'Descrição')); ?>
+        <?=text_field($product->price, array('name'=>'product', 'title'=>'Valor (R$)', 'placeholder'=>'0,00')); ?>
+        <?=select($product->product_type_id, $types,
+            array('name'=>'product', 'title'=>'Categoria'),$product->product_type_id->getValue()); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

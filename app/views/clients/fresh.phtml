@@ -1,0 +1,25 @@
+<div class="page-header">
+    <h2>Novo Cliente</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($clients_index_path(), 'Lista de Clientes'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?=$clients_fresh_path(); ?>" method="POST">
+
+        <?=text_field($this->client->name, [ 'name'=>'client', 'title'=>'Nome', 'placeholder'=>'Nome...'] ); ?>
+        <?=text_field($this->client->cpf, [ 'name'=>'client', 'title'=>'CPF', 'class' => 'cpf'] ); ?>
+        <?=text_field($this->client->rg, [ 'name'=>'client', 'title'=>'RG'] ); ?>
+        <?=select($this->client->enterprise_id, $this->enterprises,
+            [ 'name'=>'client', 'title'=>'Empresa'] ); ?>
+        <?=text_field($this->client->birth, [ 'name'=>'client', 'title'=>'Nascimento', 'class' => 'date'] ); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

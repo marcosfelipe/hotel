@@ -1,0 +1,48 @@
+<div class="page-header">
+    <h1>Produtos</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($product_types_index_path(), 'Lista de Tipos de produto'); ?></li>
+        <li><?= link_to($products_fresh_path(), 'Novo Produto'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Descrição</th>
+            <th>Preço (R$)</th>
+            <th>Categoria</th>
+            <th>Ação</th>
+        </tr>
+        <?php
+        $n = 1;
+        if ($products):
+            foreach ($products as $product): ?>
+
+                <tr>
+                    <td><?= $n; ?></td>
+                    <td><?= $product['product_description']; ?></td>
+                    <td><?= real_format($product['product_price']); ?></td>
+                    <td>
+                        <?= link_to( $product_types_show_path($product['product_type_id']), $product['product_type_description']); ?>
+                    </td>
+                    <td class="col-md-3">
+                        <?= link_to( $products_show_path($product['product_id']), 'ver'); ?>|
+                        <?= link_to( $products_edit_path($product['product_id']), 'editar'); ?>|
+                        <?= link_to( $products_destroy_path($product['product_id']), 'remover','data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>

@@ -1,0 +1,48 @@
+<div class="page-header">
+    <h1>Acomodações</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($room_types_index_path(), 'Lista de Tipos de acomodações'); ?></li>
+        <li><?= link_to($rooms_fresh_path(), 'Nova Acomodação'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Número</th>
+            <th>Andar</th>
+            <th>Tipo</th>
+            <th>Ação</th>
+        </tr>
+        <?php
+        $n = 1;
+        if ($this->rooms):
+            foreach ($this->rooms as $room): ?>
+
+                <tr>
+                    <td><?= $n; ?></td>
+                    <td><?= $room['room_number']; ?></td>
+                    <td><?= $room['room_floor']; ?></td>
+                    <td>
+                        <?= link_to( $room_types_show_path($room['room_type_id']), $room['room_type_title']); ?>
+                    </td>
+                    <td class="col-md-3">
+                        <?= link_to( $rooms_show_path($room['room_id']), 'ver'); ?>|
+                        <?= link_to( $rooms_edit_path($room['room_id']), 'editar'); ?>|
+                        <?= link_to( $rooms_destroy_path($room['room_id']), 'remover','data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>

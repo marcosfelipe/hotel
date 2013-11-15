@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><?= APP_NAME ?></title>
+    <?php stylesheet_include_tag('/bootstrap/css/bootstrap.min.css',
+        'application.css'); ?>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <?php echo link_to('#', APP_NAME, 'class="navbar-brand"'); ?>
+        <ul class="nav navbar-nav">
+            <li><a href="#" class=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href="#" class=""><span class="glyphicon glyphicon-info-sign"></span> Sobre</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><?php echo link_to('/login', '<span class="glyphicon glyphicon-user"></span> Entrar'); ?></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+
+    <?php foreach (Flash::message() as $key => $value) { ?>
+        <div class="alert alert-<?= $key ?> fade in">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <?= $value ?>
+        </div>
+    <?php } ?>
+
+    <?php require $view; ?>
+</div>
+
+<?php javascript_include_tag('jquery-1.10.2.min.js',
+    '/bootstrap/js/bootstrap.min.js',
+    'application.js') ?>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<div class="page-header">
+    <h1>Empresas</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($enterprises_fresh_path(), 'Nova empresa'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Apelido</th>
+            <th>Fone</th>
+            <th>CNPJ</th>
+            <th>E-mail</th>
+            <th>Ações</th>
+        </tr>
+        <?php
+        $n = 1;
+        if ( $this->enterprises ):
+            foreach ($this->enterprises as $enterprise): ?>
+
+                <tr>
+                    <td><?= $n; ?></td>
+                    <td><?= $enterprise['name']; ?></td>
+                    <td><?= $enterprise['trading_name']; ?></td>
+                    <td><?= $enterprise['phone']; ?></td>
+                    <td><?= $enterprise['cnpj']; ?></td>
+                    <td><?= $enterprise['email']; ?></td>
+                    <td class="col-md-3">
+                        <?= link_to( $enterprises_show_path($enterprise['id']), 'ver'); ?>|
+                        <?= link_to( $enterprises_edit_path($enterprise['id']), 'editar'); ?>|
+                        <?= link_to( $enterprises_destroy_path($enterprise['id']), 'remover','data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; else: ?>
+            <tr>
+                <td colspan="7"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>

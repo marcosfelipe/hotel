@@ -1,0 +1,35 @@
+<div class="page-header">
+    <h2>Produto</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($products_index_path(), 'Lista de Produtos'); ?></li>
+        <li><?= link_to($products_fresh_path(), 'Novo Produto'); ?></li>
+        <li><?= link_to($products_edit_path($product['products']['id']), 'Editar'); ?></li>
+        <li><?= link_to($products_destroy_path($product['products']['id']), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <table class="table">
+        <tr>
+            <td class="col-lg-4"><b>Criado em:</b></td>
+            <td><?= $product['products']['created_at']; ?></td>
+        </tr>
+        <tr>
+            <td><b>Descrição:</b></td>
+            <td><?= $product['products']['description'] ?></td>
+        <tr>
+        <tr>
+            <td><b>Categoria:</b></td>
+            <td><?=link_to($product_types_show_path(@$product['product_types']['id']),
+                @$product['product_types']['description']); ?></td>
+        <tr>
+            <td><b>Preço:</b></td>
+            <td><?= real_format($product['products']['price']); ?></td>
+        </tr>
+    </table>
+
+</div>

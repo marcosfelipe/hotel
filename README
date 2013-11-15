@@ -1,0 +1,43 @@
+Projeto
+  Exemplo utilizado para ensinar desenvolvimento web na disciplina de Programação para Internet 2.
+
+Título do Projeto
+  Lista de TODO
+
+Objetivo
+  Ensinar/Aprender Desenvolvimento web, OO, MVC e Desenvolvimento com Frameworks.
+
+Instalação
+  Baixe o projeto na pasta /var/www (local de suas páginas web)
+
+  É necessáiro atualizar os seguintes caminhos
+
+  .htaccess
+    php_value error_log ..
+    RewriteBase ...
+
+  config/application.php
+    define('SITE_ROOT', 'caminho_do_seu_projeto_apartirdo_var_www' )
+
+  Também é necessário alterar a permissão dos arquivos de log
+    chmod -R 766 logos/
+
+  Criar o banco de dados
+    ./scripts/db.sh reload
+
+Author:
+  Diego Marczal. http://marczal.com
+
+Modificações:
+    Marcos Felipe da Silva
+
+License
+  MIT License. Copyright 2013-2013 Diego Marczal. http://marczal.com
+
+/********************************************************************************************************/
+
+NOTAS DA VERSÃO:
+    *Renderização automática de views
+    *Novo metodo de disponibilização de variaveis do controller para a view
+
+

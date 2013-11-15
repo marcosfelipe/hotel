@@ -1,0 +1,25 @@
+<div class="form-group has-<?= $field->getFlagError(); ?>">
+    <label class="control-label" for="f_<?= $field->getName(); ?>"><?= $title; ?></label>
+    <select
+        name="<?= $name; ?>[<?= $field->getName(); ?>]"
+        id="f_<?= $field->getName(); ?>"
+        <?= $field->isRequired() ? 'required="required"' : ''; ?>
+        class="form-control <?=$class; ?>"
+        >
+
+        <option value=""><?=$default_option; ?></option>
+
+        <?php if ($options): ?>
+
+            <?php foreach ($options as $key => $option): ?>
+
+                <option value="<?= $key; ?>" <?=$selected == $key ? 'selected' : ''; ?>><?= $option; ?></option>
+
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+
+    </select>
+
+    <p class="help-block"><?= $field->getError(); ?></p>
+</div>

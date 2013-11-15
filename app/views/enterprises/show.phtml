@@ -1,0 +1,57 @@
+<div class="page-header">
+    <h2>Empresa</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($enterprises_index_path(), 'Lista de empresas'); ?></li>
+        <li><?= link_to($enterprises_fresh_path(), 'Nova empresa'); ?></li>
+        <li><?= link_to($enterprises_edit_path($this->enterprise->id->getValue()), 'Editar'); ?></li>
+        <li><?= link_to($enterprises_destroy_path($this->enterprise->id->getValue()), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <p>
+        <b>Nome:</b>
+        <?= $this->enterprise->name->getValue(); ?>
+    </p>
+
+    <p><b>Apelido:</b>
+
+        <?= $this->enterprise->trading_name->getValue(); ?></p>
+
+    <p><b>Fone:</b>
+
+        <?= $this->enterprise->phone->getValue(); ?></p>
+
+    <p><b>Fone (alternativo):</b>
+
+        <?= $this->enterprise->phone2->getValue(); ?></p>
+
+    <p><b>CNPJ:</b>
+
+        <?= $this->enterprise->cnpj->getValue(); ?></p>
+
+    <p><b>Endereço:</b>
+
+        <?= $this->enterprise->address->getValue(); ?></p>
+
+    <p><b>CEP:</b>
+
+        <?= $this->enterprise->zip->getValue(); ?></p>
+
+    <p><b>Inscrição Estadual:</b>
+
+        <?= $this->enterprise->state_registration->getValue(); ?></p>
+
+    <p><b>E-mail:</b>
+
+        <?= $this->enterprise->email->getValue(); ?></p>
+
+    <p><b>Criado em:</b>
+
+        <?= $this->enterprise->created_at->getValue(); ?></p>
+
+</div>

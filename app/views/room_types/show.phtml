@@ -1,0 +1,39 @@
+<div class="page-header">
+    <h2>Tipo de Acomodação</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($room_types_index_path(), 'Lista de Tipos de Acomodação'); ?></li>
+        <li><?= link_to($room_types_fresh_path(), 'Novo Tipo de Acomodação'); ?></li>
+        <li><?= link_to($room_types_edit_path($this->type->id->getValue()), 'Editar'); ?></li>
+        <li><?= link_to($room_types_destroy_path($this->type->id->getValue()), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+
+    <p>
+        <b>Criado em:</b>
+        <?= format_date($this->type->created_at->getValue()); ?>
+    </p>
+
+    <p>
+        <b>Título:</b>
+        <?= $this->type->title->getValue(); ?>
+    </p>
+
+    <p>
+        <b>Características:</b>
+        <?= $this->type->characteristics->getValue(); ?>
+    </p>
+
+    <p>
+        <b>Preço:</b>
+        R$ <?= real_format($this->type->price->getValue()); ?>
+    </p>
+
+
+
+</div>

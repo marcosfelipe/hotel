@@ -1,0 +1,12 @@
+<div class="form-group has-<?= $field->getFlagError(); ?>">
+    <label class="control-label" for="f_<?= $field->getName(); ?>"><?= $title; ?></label>
+    <input
+        type="<?=$type; ?>"
+        <?=$field->isRequired() ? 'required="required"' : ''; ?>
+        class="form-control <?=$class; ?>"
+        name="<?= $name; ?>[<?= $field->getName(); ?>]"
+        value="<?= $field->getValue() ?>"
+        id="f_<?= $field->getName(); ?>" placeholder="<?= $placeholder; ?>">
+
+    <p class="help-block"><?= $field->getError(); ?></p>
+</div>

@@ -1,0 +1,13 @@
+<section class="sign-up">
+  <header class='page-header'>
+    <h1>Formuário de Cadastro</h1>
+  </header>
+  <article>
+    <?php
+      $action = url_for('/users/create');
+      $submit = 'Registrar-se';
+
+      require '_form.phtml';
+    ?>
+  </article>
+</section>

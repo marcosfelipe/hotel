@@ -1,0 +1,24 @@
+<form role="form" action="<?= $action ?>" method="POST">
+
+  <div class="form-group <?= $user->errors('nome') ? 'has-error' : '' ?>">
+    <label class="control-label" for="user_name">Nome:*</label>
+    <input type="text" class="form-control" name="user[nome]" value="<?= $user->getNome() ?>"
+           id="user_name" placeholder="Seu nome">
+    <p class="help-block"><?= $user->errors('nome') ?></p>
+  </div>
+
+  <div class="form-group <?= $user->errors('login') ? 'has-error' : '' ?>">
+    <label class="control-label" for="user_email">Login:*</label>
+    <input type="text" class="form-control" name="user[login]" value="<?= $user->getLogin() ?>"
+           id="user_email" placeholder="Seu nome">
+    <p class="help-block"><?= $user->errors('login') ?></p>
+  </div>
+
+  <div class="form-group <?= $user->errors('password') ? 'has-error' : '' ?>">
+    <label class="control-label" for="user_password">Senha:*</label>
+    <input type="password" class="form-control" name="user[senha]" id="user_password">
+    <p class="help-block"><?= $user->errors('senha') ?></p>
+  </div>
+
+  <button type="submit" class="btn btn-primary"> <?= $submit ?></button>
+</form>

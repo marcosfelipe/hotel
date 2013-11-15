@@ -1,0 +1,28 @@
+<div class="page-header">
+    <h2>Nova Empresa</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($enterprises_index_path(), 'Lista de empresas'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?= $enterprises_create_path() ?>" method="POST">
+
+        <?=text_field($this->enterprise->name, array('name'=>'enterprise', 'title'=>'Nome', 'placeholder'=>'Nome')); ?>
+        <?=text_field($this->enterprise->trading_name, array('name'=>'enterprise', 'title'=>'Apelido', 'placeholder'=>'Apelido')); ?>
+        <?=text_field($this->enterprise->phone, array('name'=>'enterprise', 'title'=>'Fone', 'placeholder'=>'Fone')); ?>
+        <?=text_field($this->enterprise->phone2, array('name'=>'enterprise', 'title'=>'Fone (alternativo)', 'placeholder'=>'Fone (alternativo)')); ?>
+        <?=text_field($this->enterprise->cnpj, array('name'=>'enterprise', 'title'=>'CNPJ', 'placeholder'=>'CNPJ')); ?>
+        <?=text_area($this->enterprise->address, array('name'=>'enterprise', 'title'=>'Endereço', 'placeholder'=>'Endereço')); ?>
+        <?=text_field($this->enterprise->zip, array('name'=>'enterprise', 'title'=>'CEP', 'placeholder'=>'CEP')); ?>
+        <?=text_field($this->enterprise->state_registration, array('name'=>'enterprise', 'title'=>'Inscrição Estadual', 'placeholder'=>'Inscrição Estadual')); ?>
+        <?=text_field($this->enterprise->email, array('name'=>'enterprise', 'title'=>'E-mail', 'placeholder'=>'exemplo@servidor.com')); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

@@ -1,0 +1,20 @@
+<div class="page-header">
+    <h2>Novo Tipo de Produto</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($product_types_index_path(), 'Lista de Tipos de produto'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?=url_for($product_types_fresh_path())?>" method="POST">
+
+        <?=text_area($type->description, array('name'=>'type', 'title'=>'Descrição', 'placeholder'=>'Descrição')); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

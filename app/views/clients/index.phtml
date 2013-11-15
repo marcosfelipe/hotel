@@ -1,0 +1,47 @@
+<div class="page-header">
+    <h1>Clientes</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($clients_fresh_path(), 'Novo Cliente'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Empresa</th>
+            <th>Ações</th>
+        </tr>
+        <?php
+        $n = 1;
+        if ($this->clients):
+            foreach ($this->clients as $client): ?>
+
+                <tr>
+                    <td><?= $n; ?></td>
+                    <td><?= $client['client_name']; ?></td>
+                    <td><?= $client['client_cpf']; ?></td>
+                    <td>
+                        <?= link_to( $enterprises_show_path($client['enterprise_id']), $client['enterprise_name']); ?>
+                    </td>
+                    <td class="col-md-3">
+                        <?= link_to( $clients_show_path($client['client_id']), 'ver'); ?>|
+                        <?= link_to( $clients_edit_path($client['client_id']), 'editar'); ?>|
+                        <?= link_to( $clients_destroy_path($client['client_id']), 'remover','data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>

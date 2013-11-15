@@ -1,0 +1,11 @@
+<div class="page-header">
+    <h2>Fale conosco!</h2>
+</div>
+<form role="form" action="<?= $contacts_create_path() ?>" method="POST">
+
+    <?= text_field($this->contact->name, array('name' => 'contact', 'title' => 'Nome', 'placeholder' => 'Nome')); ?>
+    <?= text_field($this->contact->email, array('name' => 'contact', 'title' => 'E-mail', 'placeholder' => 'E-mail')); ?>
+    <?= text_area($this->contact->content, array('name' => 'contact', 'title' => 'Sugestão', 'placeholder' => 'Sugestão')); ?>
+
+    <button type="submit" class="btn btn-primary"> Confirmar</button>
+</form>

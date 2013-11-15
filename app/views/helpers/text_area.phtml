@@ -1,0 +1,11 @@
+<div class="form-group has-<?= $field->getFlagError(); ?>">
+    <label class="control-label" for="f_<?= $field->getName(); ?>"><?= $title; ?></label>
+    <textarea type="text"
+        <?= $field->isRequired() ? 'required="required"' : ''; ?>
+        class="form-control <?=$class; ?>"
+        name="<?= $name; ?>[<?= $field->getName(); ?>]"
+        id="f_<?= $field->getName(); ?>"
+        placeholder="<?= $placeholder; ?>"><?= $field->getValue() ?></textarea>
+
+    <p class="help-block"><?= $field->getError(); ?></p>
+</div>

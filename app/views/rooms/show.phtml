@@ -1,0 +1,39 @@
+<div class="page-header">
+    <h2>Acomodações</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($rooms_index_path(), 'Lista de Acomodações'); ?></li>
+        <li><?= link_to($rooms_fresh_path(), 'Nova Acomodação'); ?></li>
+        <li><?= link_to($rooms_edit_path($this->room['rooms']['id']), 'Editar'); ?></li>
+        <li><?= link_to($rooms_destroy_path($this->room['rooms']['id']), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <table class="table">
+        <tr>
+            <td class="col-lg-4"><b>Criado em:</b></td>
+            <td><?= format_date($this->room['rooms']['created_at']); ?></td>
+        </tr>
+        <tr>
+            <td><b>Número:</b></td>
+            <td><?= $this->room['rooms']['number'] ?></td>
+        <tr>
+        <tr>
+            <td><b>Andar:</b></td>
+            <td><?= $this->room['rooms']['floor'] ?></td>
+        <tr>
+        <tr>
+            <td><b>Categoria:</b></td>
+            <td><?=link_to($room_types_show_path(@$this->room['room_types']['id']),
+                @$this->room['room_types']['title']); ?></td>
+        <tr>
+            <td><b>Descrição:</b></td>
+            <td><?= $this->room['rooms']['description']; ?></td>
+        </tr>
+    </table>
+
+</div>

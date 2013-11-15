@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><?= APP_NAME ?></title>
+    <?php stylesheet_include_tag('/bootstrap/css/bootstrap.min.css',
+        'application.css','bootstrap-datetimepicker.min.css',
+        'datepicker.css'
+    ); ?>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <?php echo link_to('/', APP_NAME, 'class="navbar-brand"'); ?>
+        <ul class="nav navbar-nav">
+            <li><?php echo link_to('/hotel/home', '<span class="glyphicon glyphicon-home"></span> Home'); ?></li>
+            <li><?php echo link_to('/hotel/home/sobre', '<span class="glyphicon glyphicon-info-sign"></span> Sobre'); ?></li>
+            <li><?php echo link_to('/hotel/fale-conosco', '<span class="glyphicon glyphicon-hand-right"></span> Fale conosco'); ?></li>
+        </ul>
+
+
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definições <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><?= link_to($reasons_index_path(), 'Motivos'); ?></li>
+                    <li><?= link_to($products_index_path(), 'Produtos'); ?></li>
+                    <li><?= link_to($clients_index_path(), 'Clientes'); ?></li>
+                    <li><?= link_to($enterprises_index_path(), 'Empresas'); ?></li>
+                    <li><?= link_to($rooms_index_path(), 'Acomodações'); ?></li>
+                </ul>
+            </li>
+        </ul>
+
+
+
+        <?php if ($this->currentUser() != null) { ?>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle"
+                       data-toggle="dropdown"><?= $this->currentUser()->nome->getValue(); ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><?= link_to('/hotel/meu-perfil', '<span class="glyphicon glyphicon-user"></span> Perfil'); ?></li>
+                        <li><?= link_to('/hotel/logout', '<span class="glyphicon glyphicon-circle-arrow-right"></span> Sair'); ?></li>
+                    </ul>
+                </li>
+            </ul>
+
+        <?php } else { ?>
+            <ul class="nav navbar-nav navbar-right">
+                <li><?php echo link_to('/hotel/login', '<span class="glyphicon glyphicon-user"></span> Entrar'); ?></li>
+            </ul>
+        <?php } ?>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="center-container">
+            <?php foreach (Flash::message() as $key => $value) { ?>
+                <div class="alert alert-<?= $key ?> fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?= $value ?>
+                </div>
+            <?php } ?>
+
+            <?php require $view; ?>
+        </div>
+    </div>
+
+    <footer>
+        <hr>
+        <p class="pull-right"><a href="#">Topo</a></p>
+
+        <p>© 2013 Company, Inc. · <a href="#">Privacidade</a> · <a href="#">Termos</a></p>
+    </footer>
+
+    <?php javascript_include_tag(
+        'jquery-1.10.2.min.js',
+        '/bootstrap/js/bootstrap.min.js',
+        'application.js', 'jquery.mask.min.js',
+        'bootstrap-datetimepicker.min.js', 'bootstrap-datepicker.js') ?>
+</body>
+</html>
