@@ -1,0 +1,39 @@
+<div class="page-header">
+    <h2>Funcionário - detalhes</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($employees_index_path(), 'Lista de Funcionários'); ?></li>
+        <li><?= link_to($employees_fresh_path(), 'Novo Funcionário'); ?></li>
+        <li><?= link_to($employees_edit_path($this->employee->id->getValue()), 'Editar'); ?></li>
+        <li><?= link_to($employees_destroy_path($this->employee->id->getValue()), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <table class="table">
+        <tr>
+            <td class="col-lg-4"><b>Criado em:</b></td>
+            <td><?= format_date($this->employee->created_at->getValue()); ?></td>
+        </tr>
+        <tr>
+            <td><b>Nome:</b></td>
+            <td><?= $this->employee->name->getValue() ?></td>
+        </tr>
+        <tr>
+            <td><b>E-mail:</b></td>
+            <td><?= $this->employee->login->getValue() ?></td>
+        </tr>
+        <tr>
+            <td><b>Perfil:</b></td>
+            <td><?= $this->employee->level->getValue() ?></td>
+        </tr>
+        <tr>
+            <td><b>Número de acessos:</b></td>
+            <td><?= $this->employee->access->getValue() ?></td>
+        </tr>
+    </table>
+
+</div>

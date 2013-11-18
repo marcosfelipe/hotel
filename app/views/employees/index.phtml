@@ -1,0 +1,45 @@
+<div class="page-header">
+    <h1>Funcionários</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($employees_fresh_path(), 'Novo Funcionário'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Perfil</th>
+            <th>Ações</th>
+        </tr>
+        <?php
+        $n = 1;
+        if ($this->employees):
+            foreach ($this->employees as $employee): ?>
+
+                <tr>
+                    <td><?= $n; ?></td>
+                    <td><?= $employee['name']; ?></td>
+                    <td><?= $employee['login']; ?></td>
+                    <td><?= $employee['level']; ?></td>
+                    <td class="col-md-3">
+                        <?= link_to( $employees_show_path($employee['id']), 'ver'); ?>|
+                        <?= link_to( $employees_edit_path($employee['id']), 'editar'); ?>|
+                        <?= link_to( $employees_destroy_path($employee['id']), 'remover','data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>

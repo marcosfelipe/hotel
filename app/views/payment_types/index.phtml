@@ -1,0 +1,43 @@
+<div class="page-header">
+    <h1>Tipos de Pagamento</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($payments_index_path(), 'Lista de Pagamentos'); ?></li>
+        <li><?= link_to($payment_types_fresh_path(), 'Novo Tipo de pagamento'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Descrição</th>
+            <th>Criado em</th>
+            <th>Ações</th>
+        </tr>
+        <?php
+        $n = 1;
+        if ($this->types):
+            foreach ($this->types as $type): ?>
+                <tr>
+                    <td><?= $n; ?></td>
+                    <td><?= $type['description']; ?></td>
+                    <td><?= format_date($type['created_at']); ?></td>
+                    <td class="col-md-3">
+                        <?= link_to( $payment_types_show_path($type['id']), 'ver'); ?>|
+                        <?= link_to( $payment_types_edit_path($type['id']), 'editar'); ?>|
+                        <?= link_to( $payment_types_destroy_path($type['id']), 'remover','data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; else: ?>
+            <tr>
+                <td colspan="4"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>

@@ -1,0 +1,40 @@
+<div class="page-header">
+    <h2>Nova Reserva</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($reservations_index_path(), 'Lista de Reservas'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?= $reservations_create_path(); ?>" method="POST">
+
+        <?=
+        select($this->reservation->client_id, $this->clients, ['name' => 'reservation', 'title' => 'Cliente'],
+            $this->reservation->client_id->getValue()); ?>
+        <?=
+        select($this->reservation->room_id, $this->rooms, ['name' => 'reservation', 'title' => 'Acomodação'],
+            $this->reservation->room_id->getValue()); ?>
+        <?=
+        select($this->reservation->reason_id, $this->reasons, ['name' => 'reservation', 'title' => 'Motivo'],
+            $this->reservation->reason_id->getValue()); ?>
+        <?=
+        text_field($this->reservation->date_reserve, ['name' => 'reservation',
+            'title' => 'Data da Reserva', 'class' => 'datetime', 'value' => $this->agora]); ?>
+        <?=
+        text_field($this->reservation->date_prevision, ['name' => 'reservation',
+            'title' => 'Previsão de saída', 'class' => 'datetime']); ?>
+
+        <?=text_field($this->reservation->employee_id, ['name' => 'reservation','type'=>'hidden',
+            'value'=> $this->currentUser()->id->getValue() ]); ?>
+
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>
+
+<?= javascript_include_tag('reservations/fresh.js'); ?>

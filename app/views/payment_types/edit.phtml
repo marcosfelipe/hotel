@@ -1,0 +1,22 @@
+<div class="page-header">
+    <h2>Editar Tipo de Pagamento</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($payment_types_index_path(), 'Lista de Tipos de pagamento'); ?></li>
+        <li><?= link_to($payment_types_destroy_path($this->type->id->getValue()), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?=url_for($payment_types_edit_path($this->type->id->getValue()))?>" method="POST">
+
+        <?=text_field($this->type->description, array('name'=>'type', 'title'=>'Descrição', 'placeholder'=>'Descrição...')); ?>
+        <?=text_area($this->type->note, array('name'=>'type', 'title'=>'Observação', 'placeholder'=>'Observação...')); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

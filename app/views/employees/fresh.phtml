@@ -1,0 +1,24 @@
+<div class="page-header">
+    <h2>Novo Funcionário</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($employees_index_path(), 'Lista de Funcionários'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?=$employees_fresh_path(); ?>" method="POST">
+
+        <?=text_field($this->employee->name, array('name'=>'employee', 'title'=>'Nome', 'placeholder'=>'Nome...')); ?>
+        <?=text_field($this->employee->login, array('name'=>'employee', 'title'=>'E-mail', 'placeholder' => 'email@servidor.com')); ?>
+        <?=select($this->employee->level, $this->levels, array('name'=>'employee', 'title'=>'Perfil'),$this->employee->level->getValue()); ?>
+
+        <?=text_field($this->employee->active, array('name'=>'employee', 'type' => 'hidden', 'value' => 'true' )); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

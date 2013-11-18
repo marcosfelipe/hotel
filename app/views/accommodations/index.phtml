@@ -1,0 +1,59 @@
+<div class="page-header">
+    <h1>Hóspedes</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($reservations_index_path(), "Reservas <span class='badge'>{$this->reservations}</span>"); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-8">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <th>#</th>
+        <th>Acomodação</th>
+        <th>Cliente</th>
+        <th>Check-in</th>
+        <th class="col-lg-4">Ações</th>
+        </thead>
+        <?php
+        $n = 1;
+        if ($this->accommodations):
+            foreach ($this->accommodations as $accommodation): ?>
+
+                <tr>
+                    <td><?= $n; ?></td>
+                    <td>
+                        <?=
+                        link_to($rooms_show_path($accommodation['room_id']),
+                            $accommodation['room_number']); ?>
+                    </td>
+                    <td>
+                        <?=
+                        link_to($clients_show_path($accommodation['client_id']),
+                            $accommodation['client_name']); ?>
+                    </td>
+                    <td><?= format_date($accommodation['check_in'], 'd/m/Y H:i:s'); ?></td>
+                    <td class="col-md-3">
+                        <?= link_to($accommodations_show_path($accommodation['accommodation_id']), 'detalhes'); ?>|
+                        <?=
+                        link_to($accommodations_check_out_path($accommodation['accommodation_id']), 'check-out',
+                        'data-confirm="Tem certeza?"'); ?> |
+                        <?= link_to($accommodations_payment_path($accommodation['accommodation_id']), 'pagamento'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; ?>
+            <tfoot>
+                <td colspan="5"><?=count($this->accommodations); ?> registro(s) encontrado(s)</td>
+            </tfoot>
+        <?php else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>

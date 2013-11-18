@@ -1,0 +1,31 @@
+<div class="page-header">
+    <h2>Tipo de Pagamento - detalhes</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($payment_types_index_path(), 'Lista de Tipos de pagamento'); ?></li>
+        <li><?= link_to($payment_types_fresh_path(), 'Novo Tipo de pagamento'); ?></li>
+        <li><?= link_to($payment_types_edit_path($this->type->id->getValue()), 'Editar'); ?></li>
+        <li><?= link_to($payment_types_destroy_path($this->type->id->getValue()), 'Excluir', 'data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <p>
+        <b>Criado em:</b>
+        <?= format_date($this->type->created_at->getValue()); ?>
+    </p>
+
+    <p>
+        <b>Descrição:</b>
+        <?= $this->type->description->getValue(); ?>
+    </p>
+
+    <p>
+        <b>Observação:</b>
+        <?= $this->type->note->getValue(); ?>
+    </p>
+
+</div>
