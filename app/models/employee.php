@@ -12,13 +12,7 @@ class Employee extends Base{
         'login' => [
             'validates' => [
                 'rule' => 'validEmail',
-                'message' => 'Campo obrigatório!'
-            ]
-        ],
-        'password' => [
-            'validates' => [
-                'rule' => 'notEmpty',
-                'message' => 'Campo obrigatório!'
+                'message' => 'Digite um e-mail válido!'
             ]
         ],
         'level' => [
@@ -26,7 +20,20 @@ class Employee extends Base{
                 'rule' => 'notEmpty',
                 'message' => 'Campo obrigatório!'
             ]
-        ]
+        ],
+        'password',
+        'access',
+        'active',
+        'created_at'
     );
+
+    public function destroy(){
+        $this->setData(['active' => 'false']);
+        return $this->update();
+    }
+
+    public static function forSelect(){
+        return self::allS(['fields' => 'id as value, name as option']);
+    }
 
 }

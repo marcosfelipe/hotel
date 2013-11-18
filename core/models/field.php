@@ -43,11 +43,16 @@ class Field
         return str_replace($this->ignore, '', $str);
     }
 
-    private function formatDate($date,$format = 'd/m/Y')
+    private function formatDate($date,$format = 'd/m/Y',$time = false)
     {
-        if (strpos($date, '/') !== false) {
+        if (strpos($date, '/') !== false && $time == false) {
             $_date = explode('/', $date);
             return $_date[2] . '-' . $_date[1] . '-' . $_date['0'];
+        }elseif (strpos($date, '/') !== false && $time) {
+            $_date = explode('/', $date);
+            $_time = explode(' ',$_date[2]);
+            $_date[2] = $_time[0];
+            return $_date[2] . '-' . $_date[1] . '-' . $_date['0'].' '.$_time[1];
         }elseif( !empty($date) ){
             return date( $format, strtotime($date));
         }
@@ -61,7 +66,10 @@ class Field
                 $this->value = str_replace(',', '.', $value);
                 break;
             case 'date' :
-                $this->value = $this->formatDate($value,'Y-m-d');
+                $this->value = $this->formatDate($value);
+                break;
+            case 'datetime' :
+                $this->value = $this->formatDate($value,'Y-m-d H:i:s',true);
                 break;
             default :
                 $this->value = $value;
@@ -107,15 +115,7 @@ class Field
 
     public function getValue()
     {
-        switch ($this->type) {
-            case 'date' :
-                $value = $this->formatDate($this->value, $this->date_format);
-                break;
-            default :
-                $value = $this->value;
-                break;
-        }
-        return $value;
+        return $this->value;
     }
 
     public function getSize()

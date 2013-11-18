@@ -15,7 +15,10 @@
         <?=select($this->room->room_type_id, $this->types, ['name'=>'room', 'title'=>'Tipo'] ); ?>
         <?=text_field($this->room->number, array('name'=>'room', 'title'=>'Número', 'placeholder'=>'X')); ?>
         <?=text_field($this->room->floor, array('name'=>'room', 'title'=>'Andar', 'placeholder'=>'Ex: 1')); ?>
+        <?=text_field($this->room->price, array('name'=>'room', 'title'=>'Preço', 'placeholder'=>'0,00')); ?>
         <?=text_area($this->room->description, array('name'=>'room', 'title'=>'Descrição', 'placeholder'=>'descrição...')); ?>
+
+        <?=text_field($this->room->active, array('name'=>'room', 'type' => 'hidden', 'value'=> 'true')); ?>
 
         <button type="submit" class="btn btn-primary"> Confirmar</button>
     </form>

@@ -18,46 +18,50 @@
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <?php echo link_to('/', APP_NAME, 'class="navbar-brand"'); ?>
-        <ul class="nav navbar-nav">
-            <li><?php echo link_to('/hotel/home', '<span class="glyphicon glyphicon-home"></span> Home'); ?></li>
-            <li><?php echo link_to('/hotel/home/sobre', '<span class="glyphicon glyphicon-info-sign"></span> Sobre'); ?></li>
-            <li><?php echo link_to('/hotel/fale-conosco', '<span class="glyphicon glyphicon-hand-right"></span> Fale conosco'); ?></li>
-        </ul>
 
+        <?php echo link_to($home_index_path(), APP_NAME, 'class="navbar-brand"'); ?>
 
         <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Definições <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><?= link_to($reasons_index_path(), 'Motivos'); ?></li>
-                    <li><?= link_to($products_index_path(), 'Produtos'); ?></li>
-                    <li><?= link_to($clients_index_path(), 'Clientes'); ?></li>
-                    <li><?= link_to($enterprises_index_path(), 'Empresas'); ?></li>
-                    <li><?= link_to($rooms_index_path(), 'Acomodações'); ?></li>
-                </ul>
-            </li>
+            <li class="<?=activeClass('/home'); ?>"><?php echo link_to($home_index_path(), '<span class="glyphicon glyphicon-home"></span> Home'); ?></li>
+            <li class="<?=activeClass('/fale-conosco'); ?>"><?php echo link_to($contacts_fresh_path(), '<span class="glyphicon glyphicon-hand-right"></span> Fale conosco'); ?></li>
+            <li class="<?=activeClass('/sobre'); ?>"><?php echo link_to($home_about_path(), '<span class="glyphicon glyphicon-info-sign"></span> Sobre'); ?></li>
         </ul>
 
+        <?php if ($this->currentUser()): ?>
 
-
-        <?php if ($this->currentUser() != null) { ?>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav">
+                <li class="<?=activeClass('/reservas'); ?>">
+                    <?= link_to($reservations_index_path(), '<span class="glyphicon glyphicon-map-marker"></span> Reservas'); ?></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"
-                       data-toggle="dropdown"><?= $this->currentUser()->nome->getValue(); ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-cog"></span> Definições <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><?= link_to('/hotel/meu-perfil', '<span class="glyphicon glyphicon-user"></span> Perfil'); ?></li>
-                        <li><?= link_to('/hotel/logout', '<span class="glyphicon glyphicon-circle-arrow-right"></span> Sair'); ?></li>
+                        <li class="<?=activeClass('/motivos'); ?>"><?= link_to($reasons_index_path(), 'Motivos'); ?></li>
+                        <li class="<?=activeClass('/produtos'); ?>"><?= link_to($products_index_path(), 'Produtos'); ?></li>
+                        <li class="<?=activeClass('/clientes'); ?>"><?= link_to($clients_index_path(), 'Clientes'); ?></li>
+                        <li class="<?=activeClass('/empresas'); ?>"><?= link_to($enterprises_index_path(), 'Empresas'); ?></li>
+                        <li class="<?=activeClass('/acomodacoes'); ?>"><?= link_to($rooms_index_path(), 'Acomodações'); ?></li>
+                        <li class="<?=activeClass('/funcionarios'); ?>"><?= link_to($employees_index_path(), 'Funcionários'); ?></li>
                     </ul>
                 </li>
             </ul>
 
-        <?php } else { ?>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle"
+                       data-toggle="dropdown"><?= $this->currentUser()->name->getValue(); ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><?= link_to('/hotel/meu-perfil', '<span class="glyphicon glyphicon-user"></span> Perfil'); ?></li>
+                        <li><?= link_to($sessions_destroy_path(), '<span class="glyphicon glyphicon-circle-arrow-right"></span> Sair'); ?></li>
+                    </ul>
+                </li>
+            </ul>
+
+        <?php else: ?>
             <ul class="nav navbar-nav navbar-right">
                 <li><?php echo link_to('/hotel/login', '<span class="glyphicon glyphicon-user"></span> Entrar'); ?></li>
             </ul>
-        <?php } ?>
+        <?php endif; ?>
     </div>
 </nav>
 

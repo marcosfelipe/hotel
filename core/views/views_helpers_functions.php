@@ -56,13 +56,14 @@ function link_to($path, $name, $options = '')
  *
  */
 
-function real_format( $number ){
-    return number_format($number,2,',','.');
+function real_format($number)
+{
+    return number_format($number, 2, ',', '.');
 }
 
 
 /***
- *
+ * select helper
  *
  */
 
@@ -74,7 +75,8 @@ function select(Field $field, $options = false, $params = array(), $selected = f
         'field' => $field,
         'required' => 'false',
         'default_option' => '',
-        'class' => ''
+        'class' => '',
+        'no_array_name' => false
     );
     $aux = array();
     if ($options) {
@@ -89,6 +91,10 @@ function select(Field $field, $options = false, $params = array(), $selected = f
     include('app/views/helpers/select.phtml');
 }
 
+/*
+ * text_field helper
+ */
+
 function text_field(Field $field, $params = array())
 {
     $vars = array(
@@ -98,12 +104,18 @@ function text_field(Field $field, $params = array())
         'placeholder' => '',
         'type' => 'text',
         'required' => 'false',
-        'class' => ''
+        'class' => '',
+        'no_array_name' => false,
+        'value' => false
     );
     $vars = array_merge($vars, $params);
     extract($vars);
     include('app/views/helpers/text_field.phtml');
 }
+
+/*
+ * text_area helper
+ */
 
 function text_area(Field $field, $params = array())
 {
@@ -113,7 +125,9 @@ function text_area(Field $field, $params = array())
         'field' => $field,
         'placeholder' => '',
         'required' => 'false',
-        'class' => ''
+        'class' => '',
+        'no_array_name' => false,
+        'value' => false
     );
     $vars = array_merge($vars, $params);
     extract($vars);
@@ -149,6 +163,12 @@ function activeClass($key)
         return 'active';
 
     return '';
+}
+
+function image_tag($path, $name, $format, $options = "")
+{
+    $path = ASSETS_FOLDER . '/' . $path . '/' . $format . '/' . $name;
+    return "<img src=\"{$path}\" {$options} />";
 }
 
 ?>

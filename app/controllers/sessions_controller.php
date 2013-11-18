@@ -3,15 +3,13 @@
 
     public function fresh()
     {
-        static $session;
-        $session = new UserSession();
+        $this->session = new UserSession();
     }
 
     public function create()
     {
-        static $session;
-        $session = new UserSession($this->params['login']);
-        if ($session->wasCreate()) {
+        $this->session = new UserSession($this->params['login']);
+        if ($this->session->wasCreate()) {
             Flash::message('success', 'Login realizado com sucesso!');
             $this->redirect_to('/');
         } else {
@@ -22,8 +20,7 @@
 
     public function destroy()
     {
-        $session = new UserSession();
-        $session->destroy();
+        UserSession::destroySession();
         Flash::message('warning','Usuário deslogado!');
         $this->redirect_to('/');
     }

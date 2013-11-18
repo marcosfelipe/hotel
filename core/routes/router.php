@@ -70,7 +70,7 @@
                     }
                 }
 
-                $fun = self::parseController($options['controller']) . '_' . $options['action'];
+                $fun = Router::camelToSnake(self::parseController($options['controller']) . '_' . $options['action']);
                 $fun .= '_path';
 
                 $paths[$fun] = create_function(
@@ -103,7 +103,6 @@
                 $controller = new $controller_name();
 
                 $controller->beforeAction($action_name);
-                $controller->restrict($action_name);
                 $controller->setParams($merged_params);
                 $controller->$action_name();
 

@@ -18,6 +18,7 @@
         <?=select($this->client->enterprise_id, $this->enterprises,
             [ 'name'=>'client', 'title'=>'Empresa'] ); ?>
         <?=text_field($this->client->birth, [ 'name'=>'client', 'title'=>'Nascimento', 'class' => 'date'] ); ?>
+        <?=text_field($this->client->active, [ 'name'=>'client', 'type' => 'hidden', 'value' => 'true'] ); ?>
 
         <button type="submit" class="btn btn-primary"> Confirmar</button>
     </form>

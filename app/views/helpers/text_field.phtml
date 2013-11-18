@@ -1,12 +1,15 @@
-<div class="form-group has-<?= $field->getFlagError(); ?>">
+<?php if ($type != 'hidden'): ?>
+    <div class="form-group has-<?= $field->getFlagError(); ?>">
     <label class="control-label" for="f_<?= $field->getName(); ?>"><?= $title; ?></label>
+<?php endif; ?>
     <input
-        type="<?=$type; ?>"
-        <?=$field->isRequired() ? 'required="required"' : ''; ?>
-        class="form-control <?=$class; ?>"
-        name="<?= $name; ?>[<?= $field->getName(); ?>]"
-        value="<?= $field->getValue() ?>"
+        type="<?= $type; ?>"
+        <?= $field->isRequired() ? 'required="required"' : ''; ?>
+        class="form-control <?= $class; ?>"
+        name="<?= $no_array_name ? $name : $name . '[' . $field->getName() . ']'; ?>"
+        value="<?= $value ? $value : $field->getValue() ?>"
         id="f_<?= $field->getName(); ?>" placeholder="<?= $placeholder; ?>">
-
+<?php if ($type != 'hidden'): ?>
     <p class="help-block"><?= $field->getError(); ?></p>
-</div>
+    </div>
+<?php endif; ?>

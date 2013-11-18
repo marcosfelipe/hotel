@@ -7,13 +7,10 @@ $router = new Router($_SERVER['REQUEST_URI']);
 $router->get('/', array('controller' => 'HomeController', 'action' => 'index'));
 
 $router->get('/home', array('controller' => 'HomeController', 'action' => 'index'));
-$router->get('/home/index', array('controller' => 'HomeController', 'action' => 'index'));
-$router->get('/home/sobre', array('controller' => 'HomeController', 'action' => 'about'));
+$router->get('/sobre', array('controller' => 'HomeController', 'action' => 'about'));
 
 $router->get('/fale-conosco', array('controller' => 'ContactsController', 'action' => 'fresh'));
 $router->post('/fale-conosco', array('controller' => 'ContactsController', 'action' => 'create'));
-
-$router->get('/cliente/novo', array('controller' => 'ClienteController', 'action' => 'novo'));
 
 /* USERS */
 $router->post('/users/new', array('controller' => 'UsersController', 'action' => '_new'));
@@ -104,6 +101,10 @@ $router->post('/acomodacoes/editar/:id', array('controller' => 'RoomsController'
 $router->get('/acomodacoes/ver/:id', array('controller' => 'RoomsController', 'action' => 'show'));
 $router->get('/acomodacoes/deletar/:id', array('controller' => 'RoomsController', 'action' => 'destroy'));
 
+/* FOTOS DAS ACOMODAÇÕES */
+$router->post('/acomodacao-photo/create/:id', array('controller' => 'RoomPhotosController', 'action' => 'create'));
+$router->post('/acomodacao-photo/deletar/:id', array('controller' => 'RoomPhotosController', 'action' => 'destroy'));
+
 /* CRUD CLIENTES */
 $router->get('/clientes', array('controller' => 'ClientsController', 'action' => 'index'));
 $router->post('/clientes/novo', array('controller' => 'ClientsController', 'action' => 'create'));
@@ -112,6 +113,43 @@ $router->get('/clientes/editar/:id', array('controller' => 'ClientsController', 
 $router->post('/clientes/editar/:id', array('controller' => 'ClientsController', 'action' => 'update'));
 $router->get('/clientes/ver/:id', array('controller' => 'ClientsController', 'action' => 'show'));
 $router->get('/clientes/deletar/:id', array('controller' => 'ClientsController', 'action' => 'destroy'));
+
+/* CRUD FUNCIONÁRIOS */
+$router->get('/funcionarios', array('controller' => 'EmployeesController', 'action' => 'index'));
+$router->post('/funcionarios/novo', array('controller' => 'EmployeesController', 'action' => 'create'));
+$router->get('/funcionarios/novo', array('controller' => 'EmployeesController', 'action' => 'fresh'));
+$router->get('/funcionarios/editar/:id', array('controller' => 'EmployeesController', 'action' => 'edit'));
+$router->post('/funcionarios/editar/:id', array('controller' => 'EmployeesController', 'action' => 'update'));
+$router->get('/funcionarios/ver/:id', array('controller' => 'EmployeesController', 'action' => 'show'));
+$router->get('/funcionarios/deletar/:id', array('controller' => 'EmployeesController', 'action' => 'destroy'));
+$router->get('/funcionarios/restabelecer-senha/:id', array('controller' => 'EmployeesController', 'action' => 'resetPassword'));
+
+/* CRUD TIPOS DE PAGAMENTO S*/
+$router->get('/pagamentos-tipos', array('controller' => 'PaymentTypesController', 'action' => 'index'));
+$router->post('/pagamentos-tipos/novo', array('controller' => 'PaymentTypesController', 'action' => 'create'));
+$router->get('/pagamentos-tipos/novo', array('controller' => 'PaymentTypesController', 'action' => 'fresh'));
+$router->get('/pagamentos-tipos/editar/:id', array('controller' => 'PaymentTypesController', 'action' => 'edit'));
+$router->post('/pagamentos-tipos/editar/:id', array('controller' => 'PaymentTypesController', 'action' => 'update'));
+$router->get('/pagamentos-tipos/ver/:id', array('controller' => 'PaymentTypesController', 'action' => 'show'));
+$router->get('/pagamentos-tipos/deletar/:id', array('controller' => 'PaymentTypesController', 'action' => 'destroy'));
+
+/* PAGAMENTOS */
+$router->get('/pagamentos', array('controller' => 'PaymentsController', 'action' => 'index'));
+$router->post('/pagamentos/novo/:id', array('controller' => 'PaymentsController', 'action' => 'create'));
+
+/* RESERVAS */
+$router->get('/reservas', array('controller' => 'ReservationsController', 'action' => 'index'));
+$router->get('/reservas/novo', array('controller' => 'ReservationsController', 'action' => 'fresh'));
+$router->post('/reservas/novo', array('controller' => 'ReservationsController', 'action' => 'create'));
+$router->get('/reservas/ver/:id', array('controller' => 'ReservationsController', 'action' => 'show'));
+$router->get('/reservas/cancelar/:id', array('controller' => 'ReservationsController', 'action' => 'cancel'));
+$router->get('/reservas/check-in/:id', array('controller' => 'ReservationsController', 'action' => 'checkIn'));
+
+/* HOSPEDAGENS */
+$router->get('/hospedagens', array('controller' => 'AccommodationsController', 'action' => 'index'));
+$router->get('/hospedagens/ver/:id', array('controller' => 'AccommodationsController', 'action' => 'show'));
+$router->get('/hospedagens/check-out/:id', array('controller' => 'AccommodationsController', 'action' => 'checkOut'));
+$router->get('/hospedagens/pagamento/:id', array('controller' => 'AccommodationsController', 'action' => 'payment'));
 
 
 $router->load();

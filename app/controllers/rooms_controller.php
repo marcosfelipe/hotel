@@ -5,10 +5,12 @@ class RoomsController extends ApplicationController
 
     public function index()
     {
-        $this->rooms = Room::joins('LEFT JOIN room_types ON rooms.room_type_id = room_types.id',
+        $this->rooms = Room::joins('LEFT JOIN room_types ON rooms.room_type_id = room_types.id
+            WHERE rooms.active = true',
             ['fields' => 'rooms.id as room_id,
                 rooms.number as room_number, rooms.floor as room_floor,
                 rooms.description as room_description,
+                rooms.price as room_price,
                 room_types.title as room_type_title,
                 room_types.id as room_type_id']);
     }
@@ -59,6 +61,7 @@ class RoomsController extends ApplicationController
 
     public function show()
     {
+        $this->photos = RoomPhoto::where("room_id = '{$this->params[':id']}' ");
         $this->room = Room::findBelongs($this->params[':id'],
             ['belongs' => [
                     ['table' => 'room_types', 'through' => 'room_type_id']

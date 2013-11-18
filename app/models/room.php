@@ -19,7 +19,25 @@ class Room extends Base
             ]
         ],
         'description',
+        'price' => [
+            'type' => 'float',
+            'validates' => [
+                ['rule' => 'notEmpty', 'message' => 'Campo obrigatório'],
+                ['rule' => 'numeric', 'message' => 'Insira apenas números!']
+            ]
+        ],
+        'active',
         'created_at'
     );
+
+
+    public function destroy(){
+        $this->setData(['active' => 'false']);
+        return $this->update();
+    }
+
+    public static function forSelect(){
+        return self::where('active = true',['fields' => 'id as value, number as option']);
+    }
 
 }

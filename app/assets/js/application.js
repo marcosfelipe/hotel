@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 /*** Confirm dialog **/
 var data_confirm = function () {
-    $('a[data-confirm]').click(function () {
+    $('a[data-confirm],button[data-confirm]').click(function () {
         var msg = $(this).data('confirm');
         return confirm(msg);
     });
@@ -27,12 +27,11 @@ masks = function () {
         today: "Hoje"
     };
 
-    $.fn.datetimepicker.dates['br'] = ptbr;
+    $.fn.datetimepicker.dates['pt-BR'] = ptbr;
     $.fn.datepicker.dates['pt-BR'] = ptbr;
 
     $('.datetime').datetimepicker({
-        format:'dd/mm/yyyy hh:ii',
-        language:'br'
+        format:'dd/mm/yyyy hh:ii:ss'
     });
 
     $('.date').datepicker({

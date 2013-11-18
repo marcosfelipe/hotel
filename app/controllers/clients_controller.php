@@ -9,7 +9,8 @@ class ClientsController extends ApplicationController
 
     public function index()
     {
-        $this->clients = Client::joins('LEFT JOIN enterprises ON clients.enterprise_id = enterprises.id',
+        $this->clients = Client::joins('LEFT JOIN enterprises ON clients.enterprise_id = enterprises.id
+            WHERE clients.active = true',
             ['fields' => 'clients.id as client_id,
                 clients.name as client_name, clients.cpf as client_cpf,
                 enterprises.name as enterprise_name,

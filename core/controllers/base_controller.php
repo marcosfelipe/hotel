@@ -5,7 +5,6 @@
     public $view;
     protected $params;
     protected $beforeAction;
-    protected $restrict;
 
     public function setParams($params)
     {
@@ -94,26 +93,6 @@
         }
     }
 
-    public function restrict($action)
-    {
-
-        /*
-         * Array(
-         *  'actionName1' => role,
-         *  'actionName2' => role,
-         * )
-         *
-         */
-        $actions = $this->restrict;
-        if ( count($actions)>0 ) {
-            if (array_key_exists($action, $actions) ){
-                if( $this->currentUser()->getNivel() != $actions[ $action ] ){
-                    Flash::message('danger','Você não tem permissões para acessar esta página!');
-                    $this->redirect_to('/login');
-                }
-            }
-        }
-    }
 
 }
 

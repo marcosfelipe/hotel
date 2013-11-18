@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS hotel;
+--DROP DATABASE IF EXISTS hotel;
 
-CREATE DATABASE hotel;
+--CREATE DATABASE hotel;
 
-\c hotel;
+--\c hotel;
 
 CREATE TABLE enterprises(
 	id serial NOT NULL primary key,
@@ -24,9 +24,9 @@ CREATE TABLE clients (
     cpf character varying(12),
     rg character varying(10),
     enterprise_id integer references enterprises(id) ON DELETE SET NULL,
-    active boolean,
     birth date,
-    created_at timestamp
+    created_at timestamp,
+    active bool default true
 );
 
 
@@ -50,8 +50,10 @@ CREATE TABLE rooms (
     room_type_id integer references room_types(id) ON DELETE SET NULL,
     number smallint,
     floor smallint,
+    price double precision,
     description character varying(60),
-    created_at timestamp
+    created_at timestamp,
+    active bool default true
 );
 
 
@@ -61,18 +63,21 @@ CREATE TABLE employees (
     login character varying(100),
     password character varying(50),
     created_at timestamp,
-    level integer
+    access int default 0,
+    level integer,
+    active bool default true
 );
 
 
 CREATE TABLE reservations (
     id serial NOT NULL primary key,
-    reason_id integer references reasons(id),
-    client_id integer NOT NULL references clients(id),
-    room_id integer NOT NULL references rooms(id),
-    emplyee_id integer NOT NULL references employees(id),
-    date_reserve date,
-    date_prevision date,
+    reason_id integer references reasons(id) ON DELETE SET NULL,
+    client_id integer NOT NULL references clients(id) ON DELETE SET NULL,
+    room_id integer NOT NULL references rooms(id) ON DELETE SET NULL,
+    employee_id integer NOT NULL references employees(id) ON DELETE SET NULL,
+    date_reserve timestamp,
+    date_prevision timestamp,
+    active bool default true,
     created_at timestamp
 );
 
@@ -105,6 +110,7 @@ CREATE TABLE product_consumptions (
     accommodation_id integer NOT NULL references accommodations(id),
     note text,
     price double precision,
+    amount integer,
     created_at timestamp
 );
 
@@ -120,7 +126,8 @@ CREATE TABLE contacts (
 CREATE TABLE payment_types (
     id serial NOT NULL primary key,
     description text,
-    note text
+    note text,
+    created_at timestamp
 );
 
 CREATE TABLE payments (

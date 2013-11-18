@@ -1,5 +1,7 @@
+<?= stylesheet_include_tag('rooms/show.css'); ?>
+
 <div class="page-header">
-    <h2>Acomodações</h2>
+    <h2>Acomodação Nº <?=$this->room['rooms']['number']?></h2>
 </div>
 
 <div class="col-lg-3">
@@ -27,13 +29,71 @@
             <td><?= $this->room['rooms']['floor'] ?></td>
         <tr>
         <tr>
+            <td><b>Preço:</b></td>
+            <td><?= real_format($this->room['rooms']['price']) ?></td>
+        <tr>
+        <tr>
             <td><b>Categoria:</b></td>
-            <td><?=link_to($room_types_show_path(@$this->room['room_types']['id']),
-                @$this->room['room_types']['title']); ?></td>
+            <td><?=
+                link_to($room_types_show_path(@$this->room['room_types']['id']),
+                    @$this->room['room_types']['title']); ?></td>
         <tr>
             <td><b>Descrição:</b></td>
             <td><?= $this->room['rooms']['description']; ?></td>
         </tr>
     </table>
+
+    <h3 class="page-header">Fotos</h3>
+
+    <article class="photos">
+
+        <div class="clearfix">
+            <?php
+            if ($this->photos):
+                foreach ($this->photos as $photo) {
+                    ?>
+
+                    <div class="pull-left image-content">
+
+                        <a href="#" data-toggle="modal" data-target="#<?= $photo['id'] ?>">
+                            <?= image_tag('photos', $photo['name'], 'thumb', 'class="img-thumbnail"') ?>
+                        </a>
+
+                        <div class="modal fade" id="<?= $photo['id'] ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body center">
+                                        <?= image_tag('photos', $photo['name'], 'original', 'class="img-thumbnail"') ?>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+
+                        <form role="form" action="<?= $room_photos_destroy_path($photo['id']); ?>"
+                              method="POST">
+                            <button type="submit" class="btn btn-xs btn-danger btn-block" data-confirm="Tem certeza?">Remover
+                            </button>
+                        </form>
+                    </div>
+                <?php } endif; ?>
+
+
+            <div class="image-content pull-left img-thumbnail">
+                <form role="form" action="<?= $room_photos_create_path($this->room['rooms']['id']); ?>"
+                      method="POST" enctype="multipart/form-data">
+
+                    <?= text_field(new Field('photo'), ['name' => 'photo', 'no_array_name' => true, 'type' => 'file', 'title' => 'Nova imagem']) ?>
+
+                    <button type="submit" class="btn btn-primary btn-xs">Adicionar Foto</button>
+                </form>
+            </div>
+
+        </div>
+
+
+    </article>
 
 </div>

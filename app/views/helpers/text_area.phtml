@@ -3,9 +3,9 @@
     <textarea type="text"
         <?= $field->isRequired() ? 'required="required"' : ''; ?>
         class="form-control <?=$class; ?>"
-        name="<?= $name; ?>[<?= $field->getName(); ?>]"
+        name="<?=$no_array_name ? $name : $name.'['.$field->getName().']'; ?>"
         id="f_<?= $field->getName(); ?>"
-        placeholder="<?= $placeholder; ?>"><?= $field->getValue() ?></textarea>
+        placeholder="<?= $placeholder; ?>"><?= $value ? $value : $field->getValue() ?></textarea>
 
     <p class="help-block"><?= $field->getError(); ?></p>
 </div>

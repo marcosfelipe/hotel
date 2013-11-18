@@ -24,23 +24,19 @@
     {
         if (!$this->isValid()) return false;
 
-        $db_conn = Database::getConnection();
-        $sql = "select * from " . $this->table . " where login = $1 and senha = $2";
+        $resp = self::where('login = $1 and password = $2',
+            ['values' => [$this->login->getValue(),$this->password->getValue()],
+             'table' => 'employees']);
 
-        $params = array($this->login->getValue(), sha1($this->senha->getValue()));
-        $this->senha->setValue('');
-
-        $resp = pg_query_params($db_conn, $sql, $params);
-
-        if ($resp && $user = pg_fetch_assoc($resp)) {
-            $_SESSION['user']['id'] = $user['id'];
+        if ($resp) {
+            $_SESSION['user']['id'] = $resp[0]['id'];
             return true;
         }
 
         return false;
     }
 
-    public function destroy()
+    public static function destroySession()
     {
         unset($_SESSION['user']);
     }

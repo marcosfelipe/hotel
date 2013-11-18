@@ -32,6 +32,16 @@ class Client extends Base
         'created_at'
     );
 
+
+    public function destroy(){
+        $this->setData(['active' => 'false']);
+        return $this->update();
+    }
+
+    public static function forSelect(){
+        return self::where('active = true',['fields' => 'id as value, name as option']);
+    }
+
 }
 
 ?>

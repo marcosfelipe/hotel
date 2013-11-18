@@ -16,6 +16,7 @@
             <th>Número</th>
             <th>Andar</th>
             <th>Tipo</th>
+            <th>Preço</th>
             <th>Ação</th>
         </tr>
         <?php
@@ -30,6 +31,7 @@
                     <td>
                         <?= link_to( $room_types_show_path($room['room_type_id']), $room['room_type_title']); ?>
                     </td>
+                    <td><?= real_format($room['room_price']); ?></td>
                     <td class="col-md-3">
                         <?= link_to( $rooms_show_path($room['room_id']), 'ver'); ?>|
                         <?= link_to( $rooms_edit_path($room['room_id']), 'editar'); ?>|

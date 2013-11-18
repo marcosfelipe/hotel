@@ -182,8 +182,6 @@ abstract class Base
     public function setData($data = array())
     {
         foreach ($data as $key => $value) {
-            $method = "set{$key}";
-            $method = $this->snakToCamelCase($method);
             $this->{$key}->setValue(strip_tags(trim($value)));
         }
     }
@@ -245,9 +243,8 @@ abstract class Base
 
         $db_conn = Database::getConnection();
 
-        $resp = pg_query_params($db_conn, $sql, $values);
+        return @pg_query_params($db_conn, $sql, $values);
 
-        return true;
     }
 
     public function update($param = [])
@@ -283,6 +280,7 @@ abstract class Base
     {
         $params = array_merge(
             array(
+                'order' => null,
                 'limit' => 0,
                 'table' => null,
                 'fields' => '*'
@@ -293,7 +291,9 @@ abstract class Base
         if ($params['table'] === null)
             $params['table'] = self::parseTableName(get_called_class());
 
-        $sql = "select {$params['fields']} from {$params['table']} " . ($params['limit'] > 0 ? ' limit ' . $params['limit'] : '');
+        $sql = "select {$params['fields']} from {$params['table']} " .
+            ($params['limit'] > 0 ? ' limit ' . $params['limit'] : '').
+            ($params['order'] != null ? ' order by ' . $params['order'] : '');
         $db_conn = Database::getConnection();
         $query = @pg_query($db_conn, $sql);
 
@@ -312,7 +312,8 @@ abstract class Base
             array(
                 'limit' => 0,
                 'table' => null,
-                'fields' => '*'
+                'fields' => '*',
+                'values' => []
             ),
             $params
         );
@@ -321,9 +322,10 @@ abstract class Base
             $params['table'] = self::parseTableName(get_called_class());
 
         $sql = "select {$params['fields']} from {$params['table']} " . $sql . ($params['limit'] > 0 ? ' limit ' . $params['limit'] : '');
-
         $db_conn = Database::getConnection();
-        $query = @pg_query($db_conn, $sql);
+        $query = pg_query_params($db_conn, $sql,$params['values']);
+
+
 
         return @pg_fetch_all($query);
 
@@ -362,8 +364,46 @@ abstract class Base
         $sql = "select * from {$params['table']} where id = '{$id}' limit 1";
         $db_conn = Database::getConnection();
         $query = @pg_query($db_conn, $sql);
-        return new $model(pg_fetch_assoc($query));
+        $result = @pg_fetch_assoc($query);
+        return $result ? new $model($result) : $result;
     }
+
+    /* where
+     *
+     *
+    */
+
+    public static function where($sql, $params = [])
+    {
+        $params = array_merge(
+            [
+                'table' => null,
+                'limit' => null,
+                'fields' => '*',
+                'values' => []
+            ],
+            $params
+        );
+
+        $model = get_called_class();
+
+        if ($params['table'] === null)
+            $params['table'] = self::parseTableName($model);
+
+        $sql = "select {$params['fields']} from {$params['table']} where {$sql} ".($params['limit'] == null ? '' : $params['limit']);
+
+        $db_conn = Database::getConnection();
+        $query = @pg_query_params($db_conn, $sql, $params['values']);
+        return @pg_fetch_all($query);
+    }
+
+
+
+
+    /* findBelongs
+    *
+     *
+    */
 
     public static function findBelongs($id, $params = [])
     {

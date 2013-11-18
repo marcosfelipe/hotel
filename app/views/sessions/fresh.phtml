@@ -6,8 +6,8 @@
 
     <form class="form-signin" action="<?= url_for('/login') ?>" method="POST">
 
-        <?=text_field( $session->login, array('name' => 'login', 'title'=> 'E-mail', 'type' => 'email' ) ); ?>
-        <?=text_field( $session->senha, array('name' => 'login', 'title' => 'Senha', 'type' => 'password' ) ); ?>
+        <?=text_field( $this->session->login, array('name' => 'login', 'title'=> 'E-mail', 'type' => 'email' ) ); ?>
+        <?=text_field( $this->session->password, array('name' => 'login', 'title' => 'Senha', 'type' => 'password' ) ); ?>
 
         <label class="checkbox">
             <input type="checkbox" value="remember-me"> lembre-se
