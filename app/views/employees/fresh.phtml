@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="page-header" id="page-title">
     <h2>Novo Funcionário</h2>
 </div>
 
@@ -17,6 +17,8 @@
         <?=select($this->employee->level, $this->levels, array('name'=>'employee', 'title'=>'Perfil'),$this->employee->level->getValue()); ?>
 
         <?=text_field($this->employee->active, array('name'=>'employee', 'type' => 'hidden', 'value' => 'true' )); ?>
+
+        <?=text_field($this->employee->access, array('name'=>'employee', 'type' => 'hidden', 'value' => '0' )); ?>
 
         <button type="submit" class="btn btn-primary"> Confirmar</button>
     </form>

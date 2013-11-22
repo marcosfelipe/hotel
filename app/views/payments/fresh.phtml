@@ -1,0 +1,39 @@
+<div class="page-header">
+    <h2>Novo Pagamento</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($accommodations_payment_path($this->accommodation->id->getValue()), 'Voltar'); ?></li>
+        <li><?= link_to($payments_index_path(), 'Pagamentos'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?= $payments_create_path($this->accommodation->id->getValue()); ?>" method="POST">
+
+        <p>
+            <b>Hospedágem (Cód. Controle)</b>
+        </p>
+
+        <p>
+            <?= link_to($accommodations_show_path($this->accommodation->id->getValue()), $this->accommodation->control->getValue()); ?>
+        </p>
+
+        <?=
+        select($this->payment->payment_type_id, $this->types,
+            ['name' => 'payment', 'title' => 'Tipo de pagamento'], $this->payment->payment_type_id->getValue()); ?>
+
+        <?=
+        text_field($this->payment->accommodation_id, ['name' => 'payment', 'type' => 'hidden',
+            'value' => $this->accommodation->id->getValue()]); ?>
+        <?= text_field($this->payment->control, ['name' => 'payment', 'type' => 'hidden', 'value' => clear_str(microtime(true))]); ?>
+
+        <?= text_field($this->payment->price, ['name' => 'payment', 'title' => 'Valor', 'placeholder' => '0,00']); ?>
+        <?= text_area($this->payment->note, ['name' => 'payment', 'title' => 'Nota', 'placeholder' => 'nota...']); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

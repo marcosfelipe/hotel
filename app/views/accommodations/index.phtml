@@ -5,25 +5,26 @@
 <div class="col-lg-3">
     <ul class="nav nav-pills nav-stacked">
         <li><?= link_to($reservations_index_path(), "Reservas <span class='badge'>{$this->reservations}</span>"); ?></li>
+        <li><?= link_to($product_consumptions_index_path(), "Consumos de produtos"); ?></li>
+        <li><?= link_to($services_index_path(), "Serviços"); ?></li>
     </ul>
 </div>
 
 <div class="col-lg-8">
     <table class="table table-bordered table-hover">
         <thead>
-        <th>#</th>
+        <th>Cód. Controle</th>
         <th>Acomodação</th>
         <th>Cliente</th>
         <th>Check-in</th>
         <th class="col-lg-4">Ações</th>
         </thead>
         <?php
-        $n = 1;
         if ($this->accommodations):
             foreach ($this->accommodations as $accommodation): ?>
 
                 <tr>
-                    <td><?= $n; ?></td>
+                    <td><?= $accommodation['control']; ?></td>
                     <td>
                         <?=
                         link_to($rooms_show_path($accommodation['room_id']),
@@ -45,7 +46,6 @@
                 </tr>
 
                 <?php
-                $n++;
             endforeach; ?>
             <tfoot>
                 <td colspan="5"><?=count($this->accommodations); ?> registro(s) encontrado(s)</td>

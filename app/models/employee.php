@@ -1,6 +1,7 @@
 <?php
 
-class Employee extends Base{
+class Employee extends ApplicationModel
+{
 
     protected $fields = array(
         'name' => [
@@ -11,8 +12,15 @@ class Employee extends Base{
         ],
         'login' => [
             'validates' => [
-                'rule' => 'validEmail',
-                'message' => 'Digite um e-mail válido!'
+                [
+                    'rule' => 'validEmail',
+                    'message' => 'Digite um e-mail válido!'
+                ],
+                [
+                    'rule' => 'unique',
+                    'message' => 'Este e-mail já está sendo
+                        usado por outro usuário!'
+                ]
             ]
         ],
         'level' => [
@@ -21,18 +29,22 @@ class Employee extends Base{
                 'message' => 'Campo obrigatório!'
             ]
         ],
-        'password',
+        'password' => [
+            'empty_value' => null
+        ],
         'access',
         'active',
         'created_at'
     );
 
-    public function destroy(){
+    public function destroy()
+    {
         $this->setData(['active' => 'false']);
         return $this->update();
     }
 
-    public static function forSelect(){
+    public static function forSelect()
+    {
         return self::allS(['fields' => 'id as value, name as option']);
     }
 

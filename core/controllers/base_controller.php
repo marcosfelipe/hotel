@@ -39,7 +39,7 @@
         $vars = array_merge(
             array(
                 'url_helpers' => array(),
-                'static_vars' => array()
+                'static_vars' => array(),
             ),
             $vars
         );

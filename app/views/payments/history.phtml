@@ -1,0 +1,58 @@
+<div class="page-header">
+    <h1>Pagamentos - histórico</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($payments_index_path(), 'Pagamentos recentes'); ?></li>
+    </ul>
+</div>
+
+
+<div class="col-lg-8">
+
+    <form method="POST" action="<?=$payments_history_path(); ?>">
+        <?=text_field($this->search,['title' => 'Busca', 'no_array_name' => true, 'name' => 'search']); ?>
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+    </form>
+
+    <hr>
+
+    <table class="table table-bordered table-hover">
+            <thead>
+            <th>Controle</th>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Hospedagem (Cód. Controle)</th>
+            <th>Valor</th>
+        </thead>
+        <?php
+        if ($this->payments):
+            foreach ($this->payments as $payment): ?>
+
+                <tr>
+                    <td><?= $payment['pay_control']; ?></td>
+                    <td><?= format_date($payment['created_at'],'d/m/Y H:i:s'); ?></td>
+                    <td><?= $payment['type']; ?></td>
+                    <td>
+                        <?=
+                        link_to($accommodations_show_path($payment['accommodation_id']),
+                            $payment['acc_control']); ?>
+                    </td>
+                    <td class="col-md-3">
+                        <?= link_to($payments_show_path($payment['id']), 'ver'); ?>|
+                        <?= link_to($payments_destroy_path($payment['id']), 'cancelar', 'data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+            <?php
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+        <tfoot>
+            <td colspan="5">Mostrando <?=is_array($this->payments)?count($this->payments):0;?> pagamento(s)</td>
+        </tfoot>
+    </table>
+</div>

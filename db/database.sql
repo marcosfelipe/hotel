@@ -86,7 +86,8 @@ CREATE TABLE accommodations (
     reservation_id integer NOT NULL references reservations(id),
     check_in timestamp,
     check_out timestamp,
-    created_at timestamp
+    created_at timestamp,
+    control bigint
 );
 
 CREATE TABLE product_types (
@@ -135,8 +136,8 @@ CREATE TABLE payments (
     payment_type_id integer NOT NULL references payment_types(id),
     accommodation_id integer NOT NULL references accommodations(id),
     created_at timestamp,
-    data timestamp,
     price double precision,
+    control bigint,
     note text
 );
 

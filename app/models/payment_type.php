@@ -1,7 +1,7 @@
 <?php
 
 
-class PaymentType extends Base
+class PaymentType extends ApplicationModel
 {
 
     protected $fields = array(
@@ -14,6 +14,7 @@ class PaymentType extends Base
         'note',
         'created_at'
     );
+
 
 }
 

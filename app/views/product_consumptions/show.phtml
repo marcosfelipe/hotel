@@ -1,0 +1,43 @@
+<div class="page-header" id="page-title">
+    <h2>Consumo de produto - detalhes</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($product_consumptions_index_path(), 'Consumos'); ?></li>
+        <li><?= link_to($product_consumptions_destroy_path($this->product_consumption['product_consumptions']['id']), 'Cancelar','data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <table class="table">
+        <tr>
+            <td><b>Hospedagem (Cód. Controle):</b></td>
+            <td><?=link_to($accommodations_show_path(@$this->product_consumption['accommodations']['id']),
+                    @$this->product_consumption['accommodations']['control']); ?></td>
+        </tr>
+        <tr>
+            <td><b>Produto:</b></td>
+            <td><?=link_to($products_show_path(@$this->product_consumption['products']['id']),
+                    @$this->product_consumption['products']['description']); ?></td>
+        </tr>
+        <tr>
+            <td><b>Preço:</b></td>
+            <td><?=real_format($this->product_consumption['product_consumptions']['price']); ?></td>
+        </tr>
+        <tr>
+            <td><b>Quantidade:</b></td>
+            <td><?=$this->product_consumption['product_consumptions']['amount']; ?></td>
+        </tr>
+        <tr>
+            <td><b>Nota:</b></td>
+            <td><?= $this->product_consumption['product_consumptions']['note'] ?></td>
+        </tr>
+        <tr>
+            <td class="col-lg-5"><b>Criado em:</b></td>
+            <td><?= format_date($this->product_consumption['product_consumptions']['created_at']); ?></td>
+        </tr>
+    </table>
+
+</div>

@@ -11,6 +11,7 @@ class Field
     private $required = false;
     private $ignore = [];
     private $date_format = 'd/m/Y';
+    private $empty_value = false;
 
     public function __construct($name = '', $value = '')
     {
@@ -31,6 +32,11 @@ class Field
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function setEmptyValue($value)
+    {
+        $this->empty_value = $value;
     }
 
     public function setDateFormat($format)
@@ -115,7 +121,13 @@ class Field
 
     public function getValue()
     {
-        return $this->value;
+        $value = $this->value;
+        if( $value == '' ){
+            if( $this->empty_value != false ){
+                $value = $this->empty_value;
+            }
+        }
+        return $value;
     }
 
     public function getSize()

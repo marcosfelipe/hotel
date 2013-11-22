@@ -3,7 +3,7 @@
 
     public static function notEmpty($value, $key = null, &$errors = null)
     {
-        if (empty($value)) {
+        if ($value == "") {
             if ($key !== null && $errors !== null) {
                 $msg = 'não deve ser vazio';
                 $errors[$key] = $msg;
@@ -44,15 +44,31 @@
     }
 
     /*
-     * between passa o intervalo [ 1, 5 ]
+     * between passa o intervalo inteiro [ 1, 5 ]
      * intervalo equivalente = 1 a 5
      *
      */
     public static function between($value, array $interval, $key = null, &$errors = null)
     {
+        if ($value != '') {
+            if ($key !== null && $errors !== null) {
+                if (!in_array($value, range($interval[0], $interval[1]))) {
+                    $errors[$key] = 'a';
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /*
+     * min passa o float minimo do valor
+     */
+    public static function min($value, $min, $key = null, &$errors = null)
+    {
         if (!empty($value)) {
             if ($key !== null && $errors !== null) {
-                if ( !in_array( $value, range($interval[0],$interval[1]) ) ) {
+                if ($value < $min) {
                     $errors[$key] = 'a';
                     return false;
                 }
@@ -70,7 +86,7 @@
     {
         if (!empty($value)) {
             if ($key !== null && $errors !== null) {
-                if ( !in_array( strlen($value), range($interval[0],$interval[1]) ) ) {
+                if (!in_array(strlen($value), range($interval[0], $interval[1]))) {
                     $errors[$key] = 'a';
                     return false;
                 }
@@ -79,11 +95,14 @@
         return true;
     }
 
-    public static function uniqueField($value, $field, $table, &$errors = null)
+    public static function unique($value, $field, $table, $id, &$errors = null)
     {
         $db_conn = Database::getConnection();
-        $sql = "select {$field} from {$table} where lower({$field}) = $1";
-        $params = array(strtolower($value));
+        $sql = "select {$field} from {$table} where lower({$field}) = $1 and
+            cast(id as text) <> $2
+         ";
+
+        $params = array(strtolower($value), $id);
         $resp = pg_query_params($db_conn, $sql, $params);
 
         if ($row = pg_fetch_assoc($resp)) {

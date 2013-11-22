@@ -171,4 +171,8 @@ function image_tag($path, $name, $format, $options = "")
     return "<img src=\"{$path}\" {$options} />";
 }
 
+function clear_str($str){
+    return preg_replace('/[^A-Za-z0-9\-]/', '', $str);
+}
+
 ?>

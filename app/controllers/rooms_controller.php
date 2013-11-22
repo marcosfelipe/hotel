@@ -3,6 +3,13 @@
 class RoomsController extends ApplicationController
 {
 
+    public function beforeAction($action){
+        $roles = [
+            'all' => 1,
+        ];
+        parent::beforeAction($action,$roles);
+    }
+
     public function index()
     {
         $this->rooms = Room::joins('LEFT JOIN room_types ON rooms.room_type_id = room_types.id

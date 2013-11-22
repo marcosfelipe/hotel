@@ -7,7 +7,7 @@
         <?= $field->isRequired() ? 'required="required"' : ''; ?>
         class="form-control <?= $class; ?>"
         name="<?= $no_array_name ? $name : $name . '[' . $field->getName() . ']'; ?>"
-        value="<?= $value ? $value : $field->getValue() ?>"
+        value="<?= $value !== false ? $value : $field->getValue() ?>"
         id="f_<?= $field->getName(); ?>" placeholder="<?= $placeholder; ?>">
 <?php if ($type != 'hidden'): ?>
     <p class="help-block"><?= $field->getError(); ?></p>

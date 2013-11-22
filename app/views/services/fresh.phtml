@@ -1,0 +1,36 @@
+<div class="page-header" id="page-title">
+    <h2>Novo Serviço</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($accommodations_payment_path($this->accommodation->id->getValue()), 'Voltar'); ?></li>
+        <li><?= link_to($services_index_path(), 'Serviços'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?= $services_create_path($this->accommodation->id->getValue()); ?>" method="POST">
+
+        <p>
+            <b>Hospedágem (Cód. Controle)</b>
+        </p>
+
+        <p>
+            <?= link_to($accommodations_show_path($this->accommodation->id->getValue()), $this->accommodation->control->getValue()); ?>
+        </p>
+
+        <?=
+        select($this->service->service_type_id, $this->types,
+            ['name' => 'service', 'title' => 'Tipo de serviço'], $this->service->service_type_id->getValue()); ?>
+        <?=
+        text_field($this->service->accommodation_id, ['name' => 'service', 'type' => 'hidden',
+            'value' => $this->accommodation->id->getValue()]); ?>
+
+        <?= text_area($this->service->note, ['name' => 'service', 'title' => 'Nota', 'placeholder' => 'nota...']); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

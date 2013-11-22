@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('*[data-toggle="tooltip"]').tooltip();
     data_confirm();
     masks();
+    title();
 });
 
 /*** Confirm dialog **/
@@ -38,4 +39,9 @@ masks = function () {
         format:'dd/mm/yyyy',
         language:'pt-BR'
     });
+};
+
+title = function(){
+    if( $('#page-title').length > 0 )
+        $('title').text( $('title').text()+$('#page-title').text());
 };

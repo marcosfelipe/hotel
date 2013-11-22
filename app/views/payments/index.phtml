@@ -1,0 +1,52 @@
+<div class="page-header" id="page-title">
+    <h1>Pagamentos</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($payments_history_path(), 'Histórico'); ?></li>
+        <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->countAccommodations}</span>"); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-8">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <th>Controle</th>
+        <th>Data</th>
+        <th>Tipo</th>
+        <th>Hospedagem (Cód. Controle)</th>
+        <th>Valor (R$)</th>
+        <th>Ação</th>
+        </thead>
+        <?php
+        if ($this->payments):
+            foreach ($this->payments as $payment): ?>
+
+                <tr>
+                    <td><?= $payment['pay_control']; ?></td>
+                    <td><?= format_date($payment['created_at'], 'd/m/Y H:i:s'); ?></td>
+                    <td><?= $payment['type']; ?></td>
+                    <td>
+                        <?=
+                        link_to($accommodations_show_path($payment['accommodation_id']),
+                            $payment['acc_control']); ?>
+                    </td>
+                    <td><?= real_format($payment['price']); ?></td>
+                    <td class="col-md-2">
+                        <?= link_to($payments_show_path($payment['id']), 'ver'); ?>|
+                        <?= link_to($payments_destroy_path($payment['id']), 'cancelar', 'data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+            <?php
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+        <tfoot>
+        <td colspan="6">Mostrando últimos 20 pagamentos</td>
+        </tfoot>
+    </table>
+</div>

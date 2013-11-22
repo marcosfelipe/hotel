@@ -16,7 +16,7 @@
     <table class="table">
         <tr>
             <td class="col-lg-4"><b>Criado em:</b></td>
-            <td><?= $product['products']['created_at']; ?></td>
+            <td><?= format_date($product['products']['created_at'], 'd/m/Y H:i:s'); ?></td>
         </tr>
         <tr>
             <td><b>Descrição:</b></td>

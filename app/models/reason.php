@@ -1,6 +1,6 @@
 <?php
 
-class Reason extends Base{
+class Reason extends ApplicationModel{
 
     protected $fields = array(
         'description' => array(
@@ -10,9 +10,5 @@ class Reason extends Base{
             )
         )
     );
-
-    public static function forSelect(){
-        return self::allS(['fields' => 'id as value, description as option']);
-    }
 
 }

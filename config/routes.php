@@ -21,6 +21,8 @@ $router->get('/users/create', array('controller' => 'UsersController', 'action' 
 /* Routas para login e logout */
 $router->get('/login', array('controller' => 'SessionsController', 'action' => 'fresh'));
 $router->post('/login', array('controller' => 'SessionsController', 'action' => 'create'));
+$router->get('/nova-senha', array('controller' => 'SessionsController', 'action' => 'newPassword'));
+$router->post('/nova-senha', array('controller' => 'SessionsController', 'action' => 'createPassword'));
 $router->get('/logout', array('controller' => 'SessionsController', 'action' => 'destroy'));
 
 /* MEU PERFIL */
@@ -73,12 +75,10 @@ $router->post('/servicos-tipos/editar/:id', array('controller' => 'ServiceTypesC
 $router->get('/servicos-tipos/ver/:id', array('controller' => 'ServiceTypesController', 'action' => 'show'));
 $router->get('/servicos-tipos/deletar/:id', array('controller' => 'ServiceTypesController', 'action' => 'destroy'));
 
-/* CRUD TIPOS DE SERVIÇO */
+/* SERVIÇOS */
 $router->get('/servicos', array('controller' => 'ServicesController', 'action' => 'index'));
-$router->post('/servicos/novo', array('controller' => 'ServicesController', 'action' => 'create'));
-$router->get('/servicos/novo', array('controller' => 'ServicesController', 'action' => 'fresh'));
-$router->get('/servicos/editar/:id', array('controller' => 'ServicesController', 'action' => 'edit'));
-$router->post('/servicos/editar/:id', array('controller' => 'ServicesController', 'action' => 'update'));
+$router->get('/servicos/novo/:id', array('controller' => 'ServicesController', 'action' => 'fresh'));
+$router->post('/servicos/novo/:id', array('controller' => 'ServicesController', 'action' => 'create'));
 $router->get('/servicos/ver/:id', array('controller' => 'ServicesController', 'action' => 'show'));
 $router->get('/servicos/deletar/:id', array('controller' => 'ServicesController', 'action' => 'destroy'));
 
@@ -135,7 +135,12 @@ $router->get('/pagamentos-tipos/deletar/:id', array('controller' => 'PaymentType
 
 /* PAGAMENTOS */
 $router->get('/pagamentos', array('controller' => 'PaymentsController', 'action' => 'index'));
+$router->get('/pagamentos/historico', array('controller' => 'PaymentsController', 'action' => 'history'));
+$router->post('/pagamentos/historico', array('controller' => 'PaymentsController', 'action' => 'history'));
+$router->get('/pagamentos/novo/:id', array('controller' => 'PaymentsController', 'action' => 'fresh'));
 $router->post('/pagamentos/novo/:id', array('controller' => 'PaymentsController', 'action' => 'create'));
+$router->get('/pagamentos/ver/:id', array('controller' => 'PaymentsController', 'action' => 'show'));
+$router->get('/pagamentos/deletar/:id', array('controller' => 'PaymentsController', 'action' => 'destroy'));
 
 /* RESERVAS */
 $router->get('/reservas', array('controller' => 'ReservationsController', 'action' => 'index'));
@@ -150,6 +155,13 @@ $router->get('/hospedagens', array('controller' => 'AccommodationsController', '
 $router->get('/hospedagens/ver/:id', array('controller' => 'AccommodationsController', 'action' => 'show'));
 $router->get('/hospedagens/check-out/:id', array('controller' => 'AccommodationsController', 'action' => 'checkOut'));
 $router->get('/hospedagens/pagamento/:id', array('controller' => 'AccommodationsController', 'action' => 'payment'));
+
+/* CONSUMO DE PRODUTOS */
+$router->get('/produtos-consumos', array('controller' => 'ProductConsumptionsController', 'action' => 'index'));
+$router->get('/produtos-consumos/ver/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'show'));
+$router->get('/produtos-consumos/novo/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'fresh'));
+$router->post('/produtos-consumos/novo/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'create'));
+$router->get('/produtos-consumos/deletar/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'destroy'));
 
 
 $router->load();

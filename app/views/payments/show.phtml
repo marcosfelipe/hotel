@@ -1,0 +1,41 @@
+<div class="page-header">
+    <h2>Pagamento - detalhes</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($payments_index_path(), 'Pagamentos recentes'); ?></li>
+        <li><?= link_to($payments_destroy_path($this->payment['payments']['id']), 'Cancelar','data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <table class="table">
+        <tr>
+            <td><b>Hospedagem (Cód. Controle):</b></td>
+            <td><?=link_to($accommodations_show_path(@$this->payment['accommodations']['id']),
+                    @$this->payment['accommodations']['control']); ?></td>
+        </tr>
+        <td><b>Cód. Controle:</b></td>
+        <td><?= $this->payment['payments']['control'] ?></td>
+        <tr>
+            <td><b>Valor:</b></td>
+            <td><?= real_format($this->payment['payments']['price']) ?></td>
+        <tr>
+        <tr>
+            <td><b>Nota:</b></td>
+            <td><?= $this->payment['payments']['note'] ?></td>
+        <tr>
+        <tr>
+            <td><b>Tipo de pagamento:</b></td>
+            <td><?=link_to($payment_types_show_path(@$this->payment['payment_types']['id']),
+                @$this->payment['payment_types']['description']); ?></td>
+        </tr>
+        <tr>
+            <td class="col-lg-5"><b>Criado em:</b></td>
+            <td><?= format_date($this->payment['payments']['created_at']); ?></td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,52 @@
+<div class="page-header" id="page-title">
+    <h1>Consumo de Produtos</h1>
+    <i>Últimos consumos</i>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->countAccommodations}</span>"); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-8">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <th class="col-lg-3">Data</th>
+            <th>Hospedagem (Cód. Controle)</th>
+            <th>Produto</th>
+            <th>Preço (R$)</th>
+            <th>Quantidade</th>
+            <th>Ação</th>
+        </thead>
+        <?php
+        if ($this->consumptions):
+            foreach ($this->consumptions as $consumption): ?>
+
+                <tr>
+                    <td><?= format_date($consumption['created_at'],'d/m/Y H:i:s'); ?></td>
+                    <td><?=link_to($accommodations_show_path($consumption['accommodation_id']),
+                    $consumption['accommodation_control']); ?>
+                    </td>
+                    <td><?=link_to($products_show_path($consumption['product_id']),
+                    $consumption['product_description']); ?>
+                    </td>
+                    <td><?= real_format($consumption['price']); ?></td>
+                    <td><?= $consumption['amount']; ?></td>
+                    <td class="col-md-2">
+                        <?= link_to($product_consumptions_show_path($consumption['id']), 'ver'); ?>|
+                        <?= link_to($product_consumptions_destroy_path($consumption['id']), 'cancelar', 'data-confirm="Tem certeza?"'); ?>
+                    </td>
+                </tr>
+
+            <?php
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+        <tfoot>
+            <td colspan="5">Mostrando últimos 20 serviços</td>
+        </tfoot>
+    </table>
+</div>

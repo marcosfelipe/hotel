@@ -1,6 +1,6 @@
 <?php
 
-class Product extends Base{
+class Product extends ApplicationModel{
 
     protected $fields = [
         'description' => [

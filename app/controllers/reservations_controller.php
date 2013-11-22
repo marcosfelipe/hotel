@@ -1,11 +1,13 @@
 <?php
 
+require 'vendor/utils.php';
+
 class ReservationsController extends ApplicationController
 {
 
     public function beforeAction($action){
         $roles = [
-            'all' => '1',
+            'all' => 1,
         ];
         parent::beforeAction($action,$roles);
         $this->accounting = Reservation::countActiveReservations();
@@ -47,7 +49,8 @@ class ReservationsController extends ApplicationController
     {
         $accommodation = new Accommodation();
         $accommodation->setData([ 'reservation_id' => $this->params[':id'],
-            'check_in' => date('Y-m-d H:i:s') ]);
+            'check_in' => date('Y-m-d H:i:s'),
+            'control' => '20'.Utils::clear_str(microtime(true)) ]);
         if ($accommodation->save()) {
             Flash::message('success', 'Check-in efetuado com sucesso!
                 A reserva foi movida para lista de hóspedes.');

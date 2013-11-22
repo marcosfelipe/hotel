@@ -2,6 +2,7 @@
 
 class ReasonsController extends ApplicationController{
 
+
     public function beforeAction($action){
         $roles = [
             'all' => 1

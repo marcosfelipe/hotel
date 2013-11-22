@@ -102,7 +102,9 @@ class AccommodationsController extends ApplicationController
             ]
         ]);
         $this->services = $this->accommodation->services();
-        $this->accommodation->totalDebt();
+        $this->products = $this->accommodation->productConsumptions();
+        $this->payments = $this->accommodation->payments();
+        $this->total = $this->accommodation->totalDebt();
 
     }
 

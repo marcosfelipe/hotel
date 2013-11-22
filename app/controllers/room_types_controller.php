@@ -2,6 +2,13 @@
 
 class RoomTypesController extends ApplicationController{
 
+    public function beforeAction($action){
+        $roles = [
+            'all' => 1,
+        ];
+        parent::beforeAction($action,$roles);
+    }
+
     public function index(){
         $this->types = RoomType::allS();
     }

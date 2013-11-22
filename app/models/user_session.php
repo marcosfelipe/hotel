@@ -11,26 +11,27 @@
                 'message' => 'Digite um e-mail válido!'
             )
         ),
-        'password' => array(
-            'validates' => array(
-                'rule' => 'notEmpty',
-                'required' => true,
-                'message' => 'Campo obrigatório!'
-            )
-        )
+        'password',
+        'access',
+        'name',
+        'level',
+        'active'
     );
 
     public function wasCreate()
     {
         if (!$this->isValid()) return false;
 
-        $resp = self::where('login = $1 and password = $2',
-            ['values' => [$this->login->getValue(),$this->password->getValue()],
-             'table' => 'employees']);
+        $resp = Employee::where("login = $1 and ( password = $2 or password is null)",
+            ['values' => [$this->login->getValue(), $this->password->getValue()]]);
 
         if ($resp) {
             $_SESSION['user']['id'] = $resp[0]['id'];
-            return true;
+            //incrementa o accesso do usuario
+            $user = Employee::find($resp[0]['id']);
+            if ($user)
+                $user->update(['access' => $user->access->getValue() + 1]);
+            return $user;
         }
 
         return false;

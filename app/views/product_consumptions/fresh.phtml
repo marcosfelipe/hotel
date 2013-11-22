@@ -1,0 +1,44 @@
+<div class="page-header" id="page-title">
+    <h2>Novo Consumo de produto</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($accommodations_payment_path($this->accommodation->id->getValue()), 'Voltar'); ?></li>
+        <li><?= link_to($product_consumptions_index_path(), 'Consumos'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?= $product_consumptions_create_path($this->accommodation->id->getValue()); ?>" method="POST">
+
+        <p>
+            <b>Hospedágem (Cód. Controle)</b>
+        </p>
+
+        <p>
+            <?= link_to($accommodations_show_path($this->accommodation->id->getValue()), $this->accommodation->control->getValue()); ?>
+        </p>
+
+        <?=
+        select($this->consumption->product_id, $this->products,
+            ['name' => 'consumption', 'title' => 'Produto'], $this->consumption->product_id->getValue()); ?>
+
+        <?=
+        text_field($this->consumption->accommodation_id, ['name' => 'consumption', 'type' => 'hidden',
+            'value' => $this->accommodation->id->getValue()]); ?>
+
+
+        <?= text_field($this->consumption->price, ['name' => 'consumption', 'title' => 'Valor (R$)',
+        'placeholder' => '0,00']); ?>
+
+        <?= text_field($this->consumption->amount, ['name' => 'consumption', 'type' => 'number',
+        'title' => 'Quantidade', 'placeholder' => '0']); ?>
+
+        <?= text_area($this->consumption->note, ['name' => 'consumption', 'title' => 'Nota', 'placeholder' => 'nota...']); ?>
+
+        <button type="submit" class="btn btn-primary"> Confirmar</button>
+    </form>
+
+</div>

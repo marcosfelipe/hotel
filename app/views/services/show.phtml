@@ -1,0 +1,35 @@
+<div class="page-header" id="page-title">
+    <h2>Serviço - detalhes</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($services_index_path(), 'Serviços'); ?></li>
+        <li><?= link_to($services_destroy_path($this->service['services']['id']), 'Cancelar','data-confirm="Tem certeza?"'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <table class="table">
+        <tr>
+            <td><b>Hospedagem (Cód. Controle):</b></td>
+            <td><?=link_to($accommodations_show_path(@$this->service['accommodations']['id']),
+                    @$this->service['accommodations']['control']); ?></td>
+        </tr>
+        <tr>
+            <td><b>Tipo de serviço:</b></td>
+            <td><?=link_to($service_types_show_path(@$this->service['service_types']['id']),
+                    @$this->service['service_types']['description']); ?></td>
+        </tr>
+        <tr>
+            <td><b>Nota:</b></td>
+            <td><?= $this->service['services']['note'] ?></td>
+        </tr>
+        <tr>
+            <td class="col-lg-5"><b>Criado em:</b></td>
+            <td><?= format_date($this->service['services']['created_at']); ?></td>
+        </tr>
+    </table>
+
+</div>

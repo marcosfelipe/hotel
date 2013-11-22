@@ -1,6 +1,6 @@
 <?php
 
-class ServiceType extends Base{
+class ServiceType extends ApplicationModel{
 
     protected $fields = array(
         'description' => array(

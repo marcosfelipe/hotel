@@ -3,6 +3,14 @@
 class ClientsController extends ApplicationController
 {
 
+    public function beforeAction($action)
+    {
+        $roles = [
+            'all' => '1',
+        ];
+        parent::beforeAction($action, $roles);
+    }
+
     private function enterprisesSelect(){
         return Enterprise::allS(array('fields' => 'id as value,name as option'));
     }

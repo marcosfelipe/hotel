@@ -1,10 +1,11 @@
-<div class="page-header">
+<div class="page-header" id="page-title">
     <h2>Hospedagem - pagamento</h2>
 </div>
 
 <div class="col-lg-3">
     <ul class="nav nav-pills nav-stacked">
         <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->accounting}</span>"); ?></li>
+        <li><?= link_to($accommodations_show_path($this->accommodation->id->getValue()), "Detalhes"); ?></li>
         <li><?=
             link_to($accommodations_check_out_path($this->accommodation->id->getValue()),
                 'Check-out', 'data-confirm="Tem certeza?"'); ?></li>
@@ -12,6 +13,31 @@
 </div>
 
 <div class="col-lg-7">
+
+
+    <h3>Sobre a hospedagem</h3>
+    <table class="table">
+        <tr>
+            <td class="col-lg-4"><b>Código de Controle:</b></td>
+            <td><?= $this->accommodation->control->getValue(); ?></td>
+        </tr>
+        <tr>
+            <td><b>Cliente:</b></td>
+            <td><?=
+                link_to($clients_show_path($this->reservation['clients']['id']),
+                    $this->reservation['clients']['name']); ?></td>
+        </tr>
+        <tr>
+            <td class="col-lg-4"><b>Check-in:</b></td>
+            <td><?= format_date($this->accommodation->check_in->getValue(), 'd/m/Y H:i:s'); ?></td>
+        </tr>
+        <tr>
+            <td class="col-lg-4"><b>Check-out:</b></td>
+            <td><?= format_date($this->accommodation->check_out->getValue(), 'd/m/Y H:i:s'); ?></td>
+        </tr>
+    </table>
+
+    <br>
 
     <h3>Acomodação</h3>
 
@@ -29,74 +55,143 @@
 
     </table>
 
-    <h3>Sobre a reserva</h3>
+    <br>
 
-    <table class="table">
-        <tr>
-            <td class="col-lg-4"><b>Criado em:</b></td>
-            <td><?= format_date($this->reservation['reservations']['created_at'], 'd/m/Y H:i:s'); ?></td>
-        </tr>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#servicos" data-toggle="tab">Serviços</a></li>
+        <li><a href="#consumos" data-toggle="tab">Consumos</a></li>
+        <li><a href="#pagamentos" data-toggle="tab">Pagamentos</a></li>
+    </ul>
 
-        <tr>
-            <td><b>Cliente:</b></td>
-            <td><?=
-                link_to($clients_show_path($this->reservation['clients']['id']),
-                    $this->reservation['clients']['name']); ?></td>
-        </tr>
-        <tr>
-            <td><b>Funcionário:</b></td>
-            <td><?=
-                link_to($employees_show_path($this->reservation['employees']['id']),
-                    $this->reservation['employees']['name']); ?></td>
-        </tr>
-        <tr>
-            <td><b>Data da reserva:</b></td>
-            <td><?= format_date($this->reservation['reservations']['date_reserve'], 'd/m/Y H:i:s'); ?></td>
-        </tr>
-        <tr>
-            <td><b>Data da previsão de saída:</b></td>
-            <td><?= format_date($this->reservation['reservations']['date_prevision'], 'd/m/Y H:i:s'); ?></td>
-        </tr>
-    </table>
+    <div class="tab-content">
+        <div id="servicos" class="tab-pane active">
+            <br>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <th>Tipo</th>
+                    <th>Nota</th>
+                    <th colspan="2">Data</th>
+                </thead>
+                <? if ($this->services): ?>
+                    <? foreach ($this->services as $service): ?>
+                        <tr>
+                            <td><?= $service['service_type_description']; ?></td>
+                            <td><?= $service['service_note']; ?></td>
+                            <td><?= format_date($service['service_created_at'], 'd/m/Y H:i:s'); ?></td>
+                            <td class="col-lg-1"><?= link_to($services_show_path($service['service_id']), 'detalhes'); ?></td>
+                        </tr>
+                    <? endforeach; ?>
+                <? else: ?>
+                    <tr>
+                        <td colspan="3">
+                            <span class="label label-info">Nenhum serviço encontrado!</span>
+                        </td>
+                    </tr>
+                <? endif; ?>
+            </table>
+            <?=
+            link_to($services_fresh_path($this->accommodation->id->getValue()), 'Novo serviço',
+                'class="pull-right btn btn-primary""'); ?>
+
+        </div>
+
+
+        <div id="consumos" class="tab-pane">
+            <br>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <th>Data</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th colspan="2">Qtde.</th>
+                </thead>
+                <? if ($this->products): ?>
+                    <? foreach ($this->products as $product): ?>
+                        <tr>
+                            <td class="col-lg-3"><?= format_date($product['date'], 'd/m/Y H:i:s'); ?></td>
+                            <td><?= link_to($products_show_path($product['product_id']), $product['description']); ?></td>
+                            <td><?= real_format($product['price']); ?></td>
+                            <td><?= $product['amount']; ?></td>
+                            <td class="col-lg-1"><?= link_to($product_consumptions_show_path($product['id']), 'detalhes'); ?></td>
+                        </tr>
+                    <? endforeach; ?>
+                <? else: ?>
+                    <tr>
+                        <td colspan="5">
+                            <span class="label label-info">Nenhum consumo de produto encontrado!</span>
+                        </td>
+                    </tr>
+                <? endif; ?>
+            </table>
+            <?=
+            link_to($product_consumptions_fresh_path($this->accommodation->id->getValue()), 'Novo consumo',
+                'class="pull-right btn btn-primary""'); ?>
+
+        </div>
+
+        <div id="pagamentos" class="tab-pane">
+            <br>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <th>Controle</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Valor (R$)</th>
+                </thead>
+                <? if ($this->payments): ?>
+                    <? foreach ($this->payments as $payment): ?>
+                        <tr>
+                            <td><?= link_to($payments_show_path($payment['id']), $payment['control']); ?></td>
+                            <td><?= $payment['description']; ?></td>
+                            <td><?= format_date($payment['created_at'], 'd/m/Y H:i:s'); ?></td>
+                            <td><?= real_format($payment['price']); ?></td>
+                        </tr>
+                    <? endforeach; ?>
+                <? else: ?>
+                    <tr>
+                        <td colspan="4">
+                            <span class="label label-info">Nenhum pagamento foi encontrado!</span>
+                        </td>
+                    </tr>
+                <? endif; ?>
+            </table>
+            <?=
+            link_to($payments_fresh_path($this->accommodation->id->getValue()), 'Novo pagamento',
+                'class="pull-right btn btn-primary""'); ?>
+
+        </div>
+    </div>
 
     <br>
 
-    <h3>Sobre a hospedagem</h3>
-    <table class="table">
-        <tr>
-            <td class="col-lg-4"><b>Check-in:</b></td>
-            <td><?= format_date($this->accommodation->check_in->getValue(), 'd/m/Y H:i:s'); ?></td>
-        </tr>
-        <tr>
-            <td class="col-lg-4"><b>Check-out:</b></td>
-            <td><?= format_date($this->accommodation->check_out->getValue(), 'd/m/Y H:i:s'); ?></td>
-        </tr>
-    </table>
-
-    <br>
-
-    <h3>Serviços</h3>
+    <div class="page-header">
+        <h3>Resumo</h3>
+    </div>
     <table class="table table-bordered">
-        <thead>
-        <th>Tipo</th>
-        <th>Nota</th>
-        <th>Data</th>
-        </thead>
-        <? if ($this->services): ?>
-            <? foreach ($this->services as $service): ?>
-                <tr>
-                    <td><?= $service['service_type_description']; ?></td>
-                    <td><?= $service['service_note']; ?></td>
-                    <td><?= format_date($service['service_created_at'], 'd/m/Y H:i:s'); ?></td>
-                </tr>
-            <? endforeach; ?>
-        <? else: ?>
-            <tr>
-                <td colspan="2">
-                    <span class="label label-info">Nenhum serviço encontrado!</span>
-                </td>
-            </tr>
-        <? endif; ?>
+        <tr>
+            <td class="col-lg-4">Diária</td>
+            <td><b><?= $this->total['days']; ?> dia(s)</b></td>
+        </tr>
+        <tr>
+            <td class="col-lg-4">Valor da diária:</td>
+            <td><b><?= real_format($this->reservation['rooms']['price']); ?></b></td>
+        <tr>
+        <tr>
+            <td class="col-lg-2">Produtos (R$)</td>
+            <td><b><?= real_format($this->total['products']); ?> </b></td>
+        </tr>
+        <tr>
+            <td class="col-lg-2"><h4>Subtotal (R$)</h4></td>
+            <td><h4><?= real_format($this->total['subtotal']); ?></h4></td>
+        </tr>
+        <tr>
+            <td class="col-lg-2">Pagamentos (R$)</td>
+            <td><b><?= real_format($this->total['payments']); ?> </b></td>
+        </tr>
+        <tr>
+            <td class="col-lg-2"><h4>Total (R$)</h4></td>
+            <td><h4><?= real_format($this->total['total']); ?></h4></td>
+        </tr>
     </table>
 
 </div>

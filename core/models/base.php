@@ -68,6 +68,9 @@ abstract class Base
                 if( isset($field['date_format']) ){
                     $this->{$key}->setDateFormat($field['date_format']);
                 }
+                if( isset($field['empty_value']) ){
+                    $this->{$key}->setEmptyValue($field['empty_value']);
+                }
             } else {
                 $this->{strtolower($field)} = new Field(strtolower($field));
             }
@@ -127,6 +130,18 @@ abstract class Base
                                 break;
                             case 'size' :
                                 if (!Validations::size($this->{$key}->getValue(), $validate['interval'], $key, $this->errors)) {
+                                    $this->{$key}->setFlagError('error');
+                                    $this->{$key}->setError($validate['message']);
+                                }
+                                break;
+                            case 'min' :
+                                if (!Validations::min($this->{$key}->getValue(), $validate['value'], $key, $this->errors)) {
+                                    $this->{$key}->setFlagError('error');
+                                    $this->{$key}->setError($validate['message']);
+                                }
+                                break;
+                            case 'unique' :
+                                if (!Validations::unique($this->{$key}->getValue(), $key, $this->table, $this->id->getValue(), $this->errors)) {
                                     $this->{$key}->setFlagError('error');
                                     $this->{$key}->setError($validate['message']);
                                 }
@@ -228,9 +243,10 @@ abstract class Base
              */
             if ($this->primary_key != $key) {
                 $fields[] = $key;
-                $values[] = empty($value) ? null : $value;
+                $values[] = $value == '' ? null : $value;
             }
         }
+
 
         /// colocando parametros ? ? ?
         $sifras = [];
@@ -243,15 +259,15 @@ abstract class Base
 
         $db_conn = Database::getConnection();
 
-        return @pg_query_params($db_conn, $sql, $values);
+        return pg_query_params($db_conn, $sql, $values);
 
     }
 
-    public function update($param = [])
+    public function update($param = false)
     {
         if (!$this->isvalid()) return false;
 
-        $fields_values = $this->parseFieldsValues();
+        $fields_values = $param ? $param : $this->parseFieldsValues();
 
         $data = $values = [];
         $i = 1;
@@ -325,8 +341,6 @@ abstract class Base
         $db_conn = Database::getConnection();
         $query = pg_query_params($db_conn, $sql,$params['values']);
 
-
-
         return @pg_fetch_all($query);
 
     }
@@ -393,7 +407,7 @@ abstract class Base
         $sql = "select {$params['fields']} from {$params['table']} where {$sql} ".($params['limit'] == null ? '' : $params['limit']);
 
         $db_conn = Database::getConnection();
-        $query = @pg_query_params($db_conn, $sql, $params['values']);
+        $query = pg_query_params($db_conn, $sql, $params['values']);
         return @pg_fetch_all($query);
     }
 
