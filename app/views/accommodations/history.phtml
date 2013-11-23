@@ -1,24 +1,35 @@
 <div class="page-header" id="page-title">
-    <h1>Hóspedes</h1>
+    <h1>Hospedagens - histórico</h1>
 </div>
 
 <div class="col-lg-3">
     <ul class="nav nav-pills nav-stacked">
-        <li><?= link_to($reservations_index_path(), "Reservas <span class='badge'>{$this->reservations}</span>"); ?></li>
-        <li><?= link_to($accommodations_history_path(), "Histórico"); ?></li>
-        <li><?= link_to($product_consumptions_index_path(), "Consumos de produtos"); ?></li>
-        <li><?= link_to($services_index_path(), "Serviços"); ?></li>
+        <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->countAccommodations}</span>"); ?></li>
     </ul>
 </div>
 
 <div class="col-lg-8">
+
+    <form method="POST" action="<?= $accommodations_history_path(); ?>">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
+                placeholder="Pesquise numero de controle, acomodação ou cliente">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </form>
+
+    <hr>
+
     <table class="table table-bordered table-hover">
         <thead>
         <th>Cód. Controle</th>
         <th>Acomodação</th>
         <th>Cliente</th>
         <th>Check-in</th>
-        <th class="col-lg-4">Ações</th>
+        <th>Check-out</th>
+        <th class="col-lg-3">Ações</th>
         </thead>
         <?php
         if ($this->accommodations):
@@ -37,23 +48,21 @@
                             $accommodation['client_name']); ?>
                     </td>
                     <td><?= format_date($accommodation['check_in'], 'd/m/Y H:i:s'); ?></td>
+                    <td><?= format_date($accommodation['check_out'], 'd/m/Y H:i:s'); ?></td>
                     <td class="col-md-3">
-                        <?= link_to($accommodations_show_path($accommodation['accommodation_id']), 'detalhes'); ?>|
-                        <?=
-                        link_to($accommodations_check_out_path($accommodation['accommodation_id']), 'check-out',
-                        'data-confirm="Tem certeza?"'); ?> |
+                        <?= link_to($accommodations_show_path($accommodation['accommodation_id']), 'detalhes'); ?> |
                         <?= link_to($accommodations_payment_path($accommodation['accommodation_id']), 'pagamento'); ?>
                     </td>
                 </tr>
 
-                <?php
+            <?php
             endforeach; ?>
             <tfoot>
-                <td colspan="5"><?=count($this->accommodations); ?> registro(s) encontrado(s)</td>
+            <td colspan="6"><?= count($this->accommodations); ?> registro(s) encontrado(s)</td>
             </tfoot>
         <?php else: ?>
             <tr>
-                <td colspan="5"><span class="label label-info">Nenhum registro encontrado!</span></td>
+                <td colspan="6"><span class="label label-info">Nenhum registro encontrado!</span></td>
             </tr>
         <?php endif; ?>
     </table>

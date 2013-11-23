@@ -1,6 +1,6 @@
 
 <div class="page-header">
-    <h2>Reserva de <?=format_date($this->reservation['reservations']['date_reserve'],'d/m/Y H:i:s'); ?></h2>
+    <h2>Reserva de <?=format_date($this->reservation['reservations']['created_at'],'d/m/Y H:i:s'); ?></h2>
 </div>
 
 <div class="col-lg-3">
@@ -26,27 +26,27 @@
             <td><?=
                 link_to($rooms_show_path($this->reservation['rooms']['id']),
                     $this->reservation['rooms']['number']); ?></td>
-        <tr>
+        </tr>
         <tr>
             <td><b>Cliente:</b></td>
             <td><?=
                 link_to($clients_show_path($this->reservation['clients']['id']),
                     $this->reservation['clients']['name']); ?></td>
-        <tr>
+        </tr>
         <tr>
             <td><b>Funcionário:</b></td>
             <td><?=
                 link_to($employees_show_path($this->reservation['employees']['id']),
                     $this->reservation['employees']['name']); ?></td>
+        </tr>
         <tr>
+            <td><b>Data da previsão de check-in:</b></td>
+            <td><?=format_date($this->reservation['reservations']['prevision_check_in'],'d/m/Y H:i:s'); ?></td>
+        </tr>
         <tr>
-            <td><b>Data da reserva:</b></td>
-            <td><?=format_date($this->reservation['reservations']['date_reserve'],'d/m/Y H:i:s'); ?></td>
-        <tr>
-        <tr>
-            <td><b>Data da previsão de saída:</b></td>
-            <td><?=format_date($this->reservation['reservations']['date_prevision'],'d/m/Y H:i:s'); ?></td>
-        <tr>
+            <td><b>Data da previsão de check-out:</b></td>
+            <td><?=format_date($this->reservation['reservations']['prevision_check_out'],'d/m/Y H:i:s'); ?></td>
+        </tr>
     </table>
 
 </div>

@@ -60,12 +60,12 @@
                     $this->reservation['employees']['name']); ?></td>
         <tr>
         <tr>
-            <td><b>Data da reserva:</b></td>
-            <td><?= format_date($this->reservation['reservations']['date_reserve'], 'd/m/Y H:i:s'); ?></td>
+            <td><b>Data da previsão de check-in:</b></td>
+            <td><?= format_date($this->reservation['reservations']['prevision_check_in'], 'd/m/Y H:i:s'); ?></td>
         <tr>
         <tr>
-            <td><b>Data da previsão de saída:</b></td>
-            <td><?= format_date($this->reservation['reservations']['date_prevision'], 'd/m/Y H:i:s'); ?></td>
+            <td><b>Data da previsão de check-out:</b></td>
+            <td><?= format_date($this->reservation['reservations']['prevision_check_out'], 'd/m/Y H:i:s'); ?></td>
         <tr>
     </table>
 

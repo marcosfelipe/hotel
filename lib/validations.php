@@ -78,6 +78,24 @@
     }
 
     /*
+     * greaterNow passa data que o  minimo deve ser agora
+     */
+    public static function greaterNow($value, $key = null, &$errors = null)
+    {
+        if (!empty($value)) {
+            if ($key !== null && $errors !== null) {
+                $now = new Datetime(date('Y-m-d H:i:s'));
+                $date = new Datetime($value);
+                if ($date < $now) {
+                    $errors[$key] = 'a';
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /*
      * size intervalo [ 0, 5 ]
      * intervalo equivalente = palavra de 0 a 5 letras
      *

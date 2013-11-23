@@ -146,6 +146,12 @@ abstract class Base
                                     $this->{$key}->setError($validate['message']);
                                 }
                                 break;
+                            case 'greaterNow' :
+                                if (!Validations::greaterNow($this->{$key}->getValue(), $key, $this->errors)) {
+                                    $this->{$key}->setFlagError('error');
+                                    $this->{$key}->setError($validate['message']);
+                                }
+                                break;
                         }
                     }
                 }
@@ -338,6 +344,7 @@ abstract class Base
             $params['table'] = self::parseTableName(get_called_class());
 
         $sql = "select {$params['fields']} from {$params['table']} " . $sql . ($params['limit'] > 0 ? ' limit ' . $params['limit'] : '');
+
         $db_conn = Database::getConnection();
         $query = pg_query_params($db_conn, $sql,$params['values']);
 

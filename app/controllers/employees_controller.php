@@ -8,6 +8,7 @@ class EmployeesController extends ApplicationController
             'all' => '2',
         ];
         parent::beforeAction($action,$roles);
+        $this->levels = ['1' => 'Recepcionista', '2' => 'Gerente'];
     }
 
     private function getLevels()
@@ -80,6 +81,8 @@ class EmployeesController extends ApplicationController
     public function show()
     {
         $this->employee = Employee::find($this->params[':id']);
+        $this->reservations = $this->employee->lastReservations();
+        $this->countReservations = $this->employee->countReservations();
     }
 
     public function edit()

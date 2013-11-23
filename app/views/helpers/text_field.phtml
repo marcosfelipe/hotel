@@ -7,9 +7,10 @@
         <?= $field->isRequired() ? 'required="required"' : ''; ?>
         class="form-control <?= $class; ?>"
         name="<?= $no_array_name ? $name : $name . '[' . $field->getName() . ']'; ?>"
+        <?php if( $field->getType() == 'datetime' ) $value = format_date($field->getValue(),'d/m/Y H:i:s'); ?>
         value="<?= $value !== false ? $value : $field->getValue() ?>"
         id="f_<?= $field->getName(); ?>" placeholder="<?= $placeholder; ?>">
 <?php if ($type != 'hidden'): ?>
-    <p class="help-block"><?= $field->getError(); ?></p>
+    <p class="help-block" id="f_<?= $field->getName(); ?>_result"><?= $field->getError(); ?></p>
     </div>
 <?php endif; ?>

@@ -1,16 +1,26 @@
 <div class="page-header" id="page-title">
-    <h1>Consumo de Produtos</h1>
-    <i>Últimos consumos</i>
+    <h1>Consumo de Produtos - histórico</h1>
 </div>
 
 <div class="col-lg-3">
     <ul class="nav nav-pills nav-stacked">
-        <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->countAccommodations}</span>"); ?></li>
-        <li><?= link_to($product_consumptions_history_path(), "Histórico"); ?></li>
+        <li><?= link_to($product_consumptions_index_path(), "Consumos"); ?></li>
     </ul>
 </div>
 
 <div class="col-lg-8">
+
+    <form method="POST" action="<?= $product_consumptions_history_path(); ?>">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
+                   placeholder="Pesquise numero de controle ou produto">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </form>
+    <br>
+
     <table class="table table-bordered table-hover">
         <thead>
             <th class="col-lg-3">Data</th>

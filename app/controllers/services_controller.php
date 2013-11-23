@@ -12,12 +12,23 @@ class ServicesController extends ApplicationController
             'destroy' => 2
         ];
         parent::beforeAction($action, $roles);
+        $this->countAccommodations = Accommodation::countActiveAccommodations();
     }
 
     public function index()
     {
-        $this->countAccommodations = Accommodation::countActiveAccommodations();
         $this->services = Service::last();
+    }
+
+    public function history()
+    {
+        $this->services = false;
+        $this->search = new Field('search');
+        if( isset( $this->params['search'] ) ){
+            $searching = $this->params['search'];
+            $this->search->setValue($searching);
+            $this->services = Service::like($searching);
+        }
     }
 
     public function fresh()

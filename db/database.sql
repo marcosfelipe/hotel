@@ -75,15 +75,15 @@ CREATE TABLE reservations (
     client_id integer NOT NULL references clients(id) ON DELETE SET NULL,
     room_id integer NOT NULL references rooms(id) ON DELETE SET NULL,
     employee_id integer NOT NULL references employees(id) ON DELETE SET NULL,
-    date_reserve timestamp,
-    date_prevision timestamp,
+    prevision_check_in timestamp,
+    prevision_check_out timestamp,
     active bool default true,
     created_at timestamp
 );
 
 CREATE TABLE accommodations (
     id serial NOT NULL primary key,
-    reservation_id integer NOT NULL references reservations(id),
+    reservation_id integer NOT NULL references reservations(id) ON DELETE RESTRICT,
     check_in timestamp,
     check_out timestamp,
     created_at timestamp,
@@ -99,7 +99,7 @@ CREATE TABLE product_types (
 
 CREATE TABLE products (
     id serial NOT NULL primary key,
-    product_type_id integer references product_types(id),
+    product_type_id integer references product_types(id) ON DELETE SET NULL,
     description character varying(100),
     price double precision,
     created_at timestamp
@@ -107,8 +107,8 @@ CREATE TABLE products (
 
 CREATE TABLE product_consumptions (
     id serial NOT NULL primary key,
-    product_id integer NOT NULL references products(id),
-    accommodation_id integer NOT NULL references accommodations(id),
+    product_id integer NOT NULL references products(id) ON DELETE RESTRICT,
+    accommodation_id integer NOT NULL references accommodations(id) ON DELETE RESTRICT,
     note text,
     price double precision,
     amount integer,
@@ -133,8 +133,8 @@ CREATE TABLE payment_types (
 
 CREATE TABLE payments (
     id serial NOT NULL primary key,
-    payment_type_id integer NOT NULL references payment_types(id),
-    accommodation_id integer NOT NULL references accommodations(id),
+    payment_type_id integer NOT NULL references payment_types(id) ON DELETE RESTRICT,
+    accommodation_id integer NOT NULL references accommodations(id) ON DELETE RESTRICT,
     created_at timestamp,
     price double precision,
     control bigint,
@@ -160,7 +160,7 @@ CREATE TABLE room_photos (
   name VARCHAR(50) NOT NULL,
   type VARCHAR(50) NOT NULL,
   size VARCHAR(50) NOT NULL,
-  room_id INTEGER REFERENCES rooms(id) ON DELETE RESTRICT,
+  room_id INTEGER REFERENCES rooms(id) ON DELETE CASCADE,
   created_at TIMESTAMP
 );
 

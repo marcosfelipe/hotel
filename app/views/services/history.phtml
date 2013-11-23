@@ -5,12 +5,24 @@
 
 <div class="col-lg-3">
     <ul class="nav nav-pills nav-stacked">
-        <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->countAccommodations}</span>"); ?></li>
-        <li><?= link_to($services_history_path(), "Histórico"); ?></li>
+        <li><?= link_to($services_index_path(), "Serviços"); ?></li>
     </ul>
 </div>
 
 <div class="col-lg-8">
+
+    <form method="POST" action="<?= $services_history_path(); ?>">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
+                   placeholder="Pesquise numero de controle ou tipo de serviço">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </form>
+
+    <br>
+
     <table class="table table-bordered table-hover">
         <thead>
             <th>Hospedagem (Cód. Controle)</th>
@@ -24,14 +36,16 @@
 
                 <tr>
                     <td>
-                        <?=link_to($accommodations_show_path($service['accommodation_id']),
+                        <?=
+                        link_to($accommodations_show_path($service['accommodation_id']),
                             $service['control']); ?>
                     </td>
                     <td>
-                        <?=link_to($service_types_show_path($service['service_type_id']),
+                        <?=
+                        link_to($service_types_show_path($service['service_type_id']),
                             $service['service_type_description']); ?>
                     </td>
-                    <td><?= format_date($service['created_at'],'d/m/Y H:i:s'); ?></td>
+                    <td><?= format_date($service['created_at'], 'd/m/Y H:i:s'); ?></td>
                     <td class="col-md-3">
                         <?= link_to($services_show_path($service['id']), 'ver'); ?>|
                         <?= link_to($services_destroy_path($service['id']), 'cancelar', 'data-confirm="Tem certeza?"'); ?>
@@ -45,7 +59,7 @@
             </tr>
         <?php endif; ?>
         <tfoot>
-            <td colspan="5">Mostrando últimos 20 serviços</td>
+        <td colspan="5">Mostrando últimos 20 serviços</td>
         </tfoot>
     </table>
 </div>

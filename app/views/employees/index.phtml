@@ -26,7 +26,7 @@
                     <td><?= $n; ?></td>
                     <td><?= $employee['name']; ?></td>
                     <td><?= $employee['login']; ?></td>
-                    <td><?= $employee['level']; ?></td>
+                    <td><?= $this->levels[$employee['level']]; ?></td>
                     <td class="col-md-3">
                         <?= link_to( $employees_show_path($employee['id']), 'ver'); ?>|
                         <?= link_to( $employees_edit_path($employee['id']), 'editar'); ?>|

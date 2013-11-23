@@ -6,25 +6,27 @@
     <ul class="nav nav-pills nav-stacked">
         <li><?= link_to($room_types_index_path(), 'Lista de Tipos de acomodações'); ?></li>
         <li><?= link_to($rooms_fresh_path(), 'Nova Acomodação'); ?></li>
+        <li><?= link_to($reservations_index_path(), "Reservas <span class='badge'>{$this->reservations}</span>"); ?></li>
     </ul>
 </div>
 
 <div class="col-lg-7">
-    <table class="table table-bordered">
-        <tr>
+
+    <table class="table table-bordered table-hover">
+        <thead>
             <th>#</th>
             <th>Número</th>
             <th>Andar</th>
             <th>Tipo</th>
             <th>Preço</th>
             <th>Ação</th>
-        </tr>
+        </thead>
         <?php
         $n = 1;
         if ($this->rooms):
             foreach ($this->rooms as $room): ?>
 
-                <tr>
+                <tr class="<?=$room['reservation_id']?'danger':'success'; ?>">
                     <td><?= $n; ?></td>
                     <td><?= $room['room_number']; ?></td>
                     <td><?= $room['room_floor']; ?></td>
@@ -47,4 +49,8 @@
             </tr>
         <?php endif; ?>
     </table>
+
+
+    <span class="label label-success">&nbsp;</span> Disponível
+    <span class="label label-danger">&nbsp;</span> Reservada
 </div>

@@ -6,11 +6,11 @@ class AccommodationsController extends ApplicationController
     public function beforeAction($action)
     {
         $roles = [
-            'all' => '1',
+            'all' => 1,
         ];
         parent::beforeAction($action, $roles);
         $this->accounting = Accommodation::countActiveAccommodations();
-        $this->agora = date('d/m/Y H:i:s');
+        $this->now = date('d/m/Y H:i:s');
     }
 
     public function index()
@@ -19,30 +19,17 @@ class AccommodationsController extends ApplicationController
         $this->accommodations = Accommodation::activeAccommodations();
     }
 
-    public function fresh()
+    public function history()
     {
-        $this->reasons = Reason::forSelect();
-        $this->clients = Client::forSelect();
-        $this->rooms = Reservation::roomsForSelect();
-        $this->reservation = new Reservation();
-    }
-
-    public function create()
-    {
-        $this->agora = date('d/m/Y H:i:s');
-        $this->reasons = Reason::forSelect();
-        $this->clients = Client::forSelect();
-        $this->rooms = Reservation::roomsForSelect();
-        $this->reservation = new Reservation($this->params['reservation'] + ['active' => 'true']);
-        if ($this->reservation->save()) {
-            Flash::message('success', 'Reserva criada com sucesso!');
-            $this->redirect_to('/reservas');
-        } else {
-            Flash::message('danger', 'Não foi possível criar a reserva! Verifique o formulário!');
+        $this->countAccommodations = Accommodation::countActiveAccommodations();
+        $this->accommodations = false;
+        $this->search = new Field('search');
+        if( isset( $this->params['search'] ) ){
+            $searching = $this->params['search'];
+            $this->search->setValue($searching);
+            $this->accommodations = Accommodation::like($searching);
         }
-        $this->view = 'reservations/fresh';
     }
-
 
     public function checkOut()
     {
@@ -107,6 +94,7 @@ class AccommodationsController extends ApplicationController
         $this->total = $this->accommodation->totalDebt();
 
     }
+
 
 
 }

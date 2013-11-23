@@ -1,4 +1,4 @@
-<div class="page-header">
+<div class="page-header" id="page-title">
     <h2>Nova Reserva</h2>
 </div>
 
@@ -21,12 +21,12 @@
         <?=
         select($this->reservation->reason_id, $this->reasons, ['name' => 'reservation', 'title' => 'Motivo'],
             $this->reservation->reason_id->getValue()); ?>
-        <?=
-        text_field($this->reservation->date_reserve, ['name' => 'reservation',
-            'title' => 'Data da Reserva', 'class' => 'datetime', 'value' => $this->agora]); ?>
-        <?=
-        text_field($this->reservation->date_prevision, ['name' => 'reservation',
-            'title' => 'Previsão de saída', 'class' => 'datetime']); ?>
+
+        <?=text_field($this->reservation->prevision_check_in, ['name' => 'reservation',
+            'title' => 'Previsão de check-in', 'class' => 'datetime']); ?>
+
+        <?=text_field($this->reservation->prevision_check_out, ['name' => 'reservation',
+            'title' => 'Previsão de check-out', 'class' => 'datetime']); ?>
 
         <?=text_field($this->reservation->employee_id, ['name' => 'reservation','type'=>'hidden',
             'value'=> $this->currentUser()->id->getValue() ]); ?>

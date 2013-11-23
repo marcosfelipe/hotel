@@ -28,11 +28,59 @@
         </tr>
         <tr>
             <td><b>Perfil:</b></td>
-            <td><?= $this->employee->level->getValue() ?></td>
+            <td><?= $this->levels[$this->employee->level->getValue()] ?></td>
         </tr>
         <tr>
             <td><b>Número de acessos:</b></td>
             <td><?= $this->employee->access->getValue() ?></td>
+        </tr>
+    </table>
+
+    <h3 class="page-header">Últimas Reservas</h3>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <th>Acomodação</th>
+        <th>Cliente</th>
+        <th>Data Reserva</th>
+        <th>Ações</th>
+        </thead>
+        <?php
+        if ($this->reservations):
+            foreach ($this->reservations as $reservation): ?>
+                <tr>
+                    <td>
+                        <?=
+                        link_to($rooms_show_path($reservation['room_id']),
+                            $reservation['room_number']); ?>
+                    </td>
+                    <td>
+                        <?=
+                        link_to($clients_show_path($reservation['client_id']),
+                            $reservation['client_name']); ?>
+                    </td>
+                    <td><?= format_date($reservation['created_at'],'d/m/Y H:i:s'); ?></td>
+                    <td class="col-md-1">
+                        <?= link_to($reservations_show_path($reservation['reservation_id']), 'ver'); ?>
+                    </td>
+                </tr>
+
+                <?php
+            endforeach; ?>
+            <tfoot>
+            <td colspan="6">Mostrando as últimas 5 reservas.</td>
+            </tfoot>
+        <?php else: ?>
+            <tr>
+                <td colspan="7"><span class="label label-info">Nenhum registro encontrado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+
+    <h3 class='page-header'>Reservas efetuadas</h3>
+    <table class="table">
+        <tr>
+            <td>#</td>
+            <td><b><?=$this->countReservations; ?></b></td>
         </tr>
     </table>
 

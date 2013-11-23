@@ -5,6 +5,7 @@
     public $view;
     protected $params;
     protected $beforeAction;
+    public $response_type;
 
     public function setParams($params)
     {
@@ -31,10 +32,6 @@
     public function render($vars = array())
     {
         require 'core/views/views_helpers_functions.php';
-        $layout = 'layout/application.phtml';
-
-        if (isset($this->viewVars['layout']) && $this->viewVars['layout'])
-            $layout = $this->viewVars['layout'];
 
         $vars = array_merge(
             array(
@@ -49,7 +46,15 @@
         extract($this->viewVars);
 
         $view = 'views/' . $this->view.'.phtml';
-        require 'views/' . $layout;
+
+        if( $this->response_type == 'json' ){
+            require $view;
+        }else{
+            $layout = 'layout/application.phtml';
+            if (isset($this->viewVars['layout']) && $this->viewVars['layout'])
+                $layout = $this->viewVars['layout'];
+            require 'views/' . $layout;
+        }
         exit();
     }
 

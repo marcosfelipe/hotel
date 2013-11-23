@@ -40,4 +40,13 @@ class Room extends Base
         return self::where('active = true',['fields' => 'id as value, number as option']);
     }
 
+    public function hasReservation(){
+        $id = $this->id->getValue();
+        $count = Reservation::where('active = true
+            AND room_id = $1',
+            ['values' => [$id] ]
+        );
+        return $count ? true : false;
+    }
+
 }

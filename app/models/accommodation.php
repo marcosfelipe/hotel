@@ -30,7 +30,7 @@ class Accommodation extends Base
             reservations.id as reservation_id,
             rooms.id as room_id,
             employees.id as employee_id,
-            date_reserve, date_prevision,
+            reservations.created_at as date_reserve, prevision_check_in, prevision_check_out,
             accommodations.id as accommodation_id,
             accommodations.check_in as check_in,
             accommodations.control as control
@@ -168,6 +168,42 @@ class Accommodation extends Base
     {
         return Room::where(' id not in (select room_id from reservations where active = true) ',
             ['fields' => 'id as value, number as option']);
+    }
+
+    /* like para historico */
+    public static function like($value)
+    {
+        if (!empty($value)) {
+            $value = "%$value%";
+            return self::joins(
+                'INNER JOIN reservations ON reservation_id = reservations.id
+                 INNER JOIN clients ON client_id = clients.id
+                 INNER JOIN rooms ON room_id = rooms.id
+                 INNER JOIN employees ON employee_id = employees.id
+                 WHERE reservations.active = false
+                 AND accommodations.check_out IS NOT NULL
+                 AND
+                 ( CAST( accommodations.control AS TEXT) LIKE $1 OR CAST(rooms.number AS TEXT) LIKE $1
+                    OR clients.name LIKE $1 )
+                 ORDER BY check_out DESC
+                ',
+                ['fields' =>
+                'clients.name as client_name,
+                rooms.number as room_number,
+                employees.name as employee_name,
+                clients.id as client_id,
+                reservations.id as reservation_id,
+                rooms.id as room_id,
+                employees.id as employee_id,
+                reservations.created_at as date_reserve, prevision_check_in, prevision_check_out,
+                accommodations.id as accommodation_id,
+                accommodations.check_in as check_in,
+                accommodations.check_out as check_out,
+                accommodations.control as control
+                ', 'values' => [$value]]
+            );
+        }
+        return false;
     }
 
 }

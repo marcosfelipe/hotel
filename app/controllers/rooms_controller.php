@@ -12,14 +12,19 @@ class RoomsController extends ApplicationController
 
     public function index()
     {
-        $this->rooms = Room::joins('LEFT JOIN room_types ON rooms.room_type_id = room_types.id
+        $this->reservations = Reservation::countActiveReservations();
+        $this->rooms = Room::joins('
+            LEFT JOIN room_types ON rooms.room_type_id = room_types.id
+            LEFT JOIN reservations ON reservations.room_id = rooms.id AND reservations.active = true
             WHERE rooms.active = true',
             ['fields' => 'rooms.id as room_id,
                 rooms.number as room_number, rooms.floor as room_floor,
                 rooms.description as room_description,
                 rooms.price as room_price,
                 room_types.title as room_type_title,
-                room_types.id as room_type_id']);
+                room_types.id as room_type_id,
+                reservations.id as reservation_id
+                ']);
     }
 
     public function fresh()
@@ -81,6 +86,12 @@ class RoomsController extends ApplicationController
     {
         $this->types = RoomType::allS(['fields' => 'id as value,title as option']);
         $this->room = Room::find($this->params[':id']);
+    }
+
+    public function verify(){
+        $room = Room::find($this->params[':id']);
+        $this->result = $room->hasReservation();
+        $this->response_type = 'json';
     }
 
 }

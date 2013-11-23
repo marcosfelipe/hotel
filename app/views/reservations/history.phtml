@@ -1,16 +1,27 @@
 <div class="page-header" id="page-title">
-    <h1>Reservas ativas</h1>
+    <h1>Reservas - histórico</h1>
 </div>
 
 <div class="col-lg-3">
     <ul class="nav nav-pills nav-stacked">
-        <li><?= link_to($reservations_fresh_path(), 'Nova reserva'); ?></li>
-        <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->guests}</span>"); ?></li>
-        <li><?= link_to($reservations_history_path(), 'Histórico'); ?></li>
+        <li><?= link_to($reservations_index_path(), "Reservas <span class='badge'>{$this->countReservations}</span>"); ?></li>
     </ul>
 </div>
 
 <div class="col-lg-8">
+
+    <form method="POST" action="<?= $reservations_history_path(); ?>">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
+                   placeholder="Pesquise cliente, funcionário ou acomodação">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </form>
+
+    <br>
+
     <table class="table table-bordered table-hover">
         <thead>
             <th>#</th>
@@ -18,7 +29,7 @@
             <th>Cliente</th>
             <th>Data Reserva</th>
             <th>Previsão check-in</th>
-            <th>Ações</th>
+            <th>Ação</th>
         </thead>
         <?php
         $n = 1;
@@ -39,12 +50,8 @@
                     </td>
                     <td><?= format_date($reservation['date_reserve'],'d/m/Y H:i:s'); ?></td>
                     <td><?= format_date($reservation['prevision_check_in'], 'd/m/Y H:i:s'); ?></td>
-                    <td class="col-md-3">
-                        <?= link_to($reservations_show_path($reservation['reservation_id']), 'ver'); ?>|
-                        <?= link_to($reservations_check_in_path($reservation['reservation_id']), 'check-in',
-                            'data-confirm="Tem certeza?"'); ?>|
-                        <?=link_to($reservations_cancel_path($reservation['reservation_id']), 'cancelar',
-                            'data-confirm="Tem certeza?"'); ?>
+                    <td class="col-md-1">
+                        <?= link_to($reservations_show_path($reservation['reservation_id']), 'ver'); ?>
                     </td>
                 </tr>
 

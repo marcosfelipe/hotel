@@ -11,6 +11,7 @@ class ReservationsController extends ApplicationController
         ];
         parent::beforeAction($action,$roles);
         $this->accounting = Reservation::countActiveReservations();
+        $this->now = date('d/m/Y H:i:s');
     }
 
     public function index()
@@ -19,18 +20,28 @@ class ReservationsController extends ApplicationController
         $this->reservations = Reservation::activeReservations();
     }
 
+    public function history()
+    {
+        $this->countReservations = Reservation::countActiveReservations();
+        $this->reservations = false;
+        $this->search = new Field('search');
+        if( isset( $this->params['search'] ) ){
+            $searching = $this->params['search'];
+            $this->search->setValue($searching);
+            $this->reservations = Reservation::like($searching);
+        }
+    }
+
     public function fresh()
     {
         $this->reasons = Reason::forSelect();
         $this->clients = Client::forSelect();
         $this->rooms = Reservation::roomsForSelect();
         $this->reservation = new Reservation();
-        $this->agora = date('d/m/Y H:i:s');
     }
 
     public function create()
     {
-        $this->agora = date('d/m/Y H:i:s');
         $this->reasons = Reason::forSelect();
         $this->clients = Client::forSelect();
         $this->rooms = Reservation::roomsForSelect();

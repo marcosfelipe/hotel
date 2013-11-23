@@ -77,6 +77,8 @@ $router->get('/servicos-tipos/deletar/:id', array('controller' => 'ServiceTypesC
 
 /* SERVIÇOS */
 $router->get('/servicos', array('controller' => 'ServicesController', 'action' => 'index'));
+$router->get('/servicos/historico', array('controller' => 'ServicesController', 'action' => 'history'));
+$router->post('/servicos/historico', array('controller' => 'ServicesController', 'action' => 'history'));
 $router->get('/servicos/novo/:id', array('controller' => 'ServicesController', 'action' => 'fresh'));
 $router->post('/servicos/novo/:id', array('controller' => 'ServicesController', 'action' => 'create'));
 $router->get('/servicos/ver/:id', array('controller' => 'ServicesController', 'action' => 'show'));
@@ -100,6 +102,7 @@ $router->get('/acomodacoes/editar/:id', array('controller' => 'RoomsController',
 $router->post('/acomodacoes/editar/:id', array('controller' => 'RoomsController', 'action' => 'update'));
 $router->get('/acomodacoes/ver/:id', array('controller' => 'RoomsController', 'action' => 'show'));
 $router->get('/acomodacoes/deletar/:id', array('controller' => 'RoomsController', 'action' => 'destroy'));
+$router->get('/acomodacoes/verificar/:id', array('controller' => 'RoomsController', 'action' => 'verify'));
 
 /* FOTOS DAS ACOMODAÇÕES */
 $router->post('/acomodacao-photo/create/:id', array('controller' => 'RoomPhotosController', 'action' => 'create'));
@@ -144,6 +147,8 @@ $router->get('/pagamentos/deletar/:id', array('controller' => 'PaymentsControlle
 
 /* RESERVAS */
 $router->get('/reservas', array('controller' => 'ReservationsController', 'action' => 'index'));
+$router->get('/reservas/historico', array('controller' => 'ReservationsController', 'action' => 'history'));
+$router->post('/reservas/historico', array('controller' => 'ReservationsController', 'action' => 'history'));
 $router->get('/reservas/novo', array('controller' => 'ReservationsController', 'action' => 'fresh'));
 $router->post('/reservas/novo', array('controller' => 'ReservationsController', 'action' => 'create'));
 $router->get('/reservas/ver/:id', array('controller' => 'ReservationsController', 'action' => 'show'));
@@ -152,12 +157,16 @@ $router->get('/reservas/check-in/:id', array('controller' => 'ReservationsContro
 
 /* HOSPEDAGENS */
 $router->get('/hospedagens', array('controller' => 'AccommodationsController', 'action' => 'index'));
+$router->get('/hospedagens/historico', array('controller' => 'AccommodationsController', 'action' => 'history'));
+$router->post('/hospedagens/historico', array('controller' => 'AccommodationsController', 'action' => 'history'));
 $router->get('/hospedagens/ver/:id', array('controller' => 'AccommodationsController', 'action' => 'show'));
 $router->get('/hospedagens/check-out/:id', array('controller' => 'AccommodationsController', 'action' => 'checkOut'));
 $router->get('/hospedagens/pagamento/:id', array('controller' => 'AccommodationsController', 'action' => 'payment'));
 
 /* CONSUMO DE PRODUTOS */
 $router->get('/produtos-consumos', array('controller' => 'ProductConsumptionsController', 'action' => 'index'));
+$router->get('/produtos-consumos/historico', array('controller' => 'ProductConsumptionsController', 'action' => 'history'));
+$router->post('/produtos-consumos/historico', array('controller' => 'ProductConsumptionsController', 'action' => 'history'));
 $router->get('/produtos-consumos/ver/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'show'));
 $router->get('/produtos-consumos/novo/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'fresh'));
 $router->post('/produtos-consumos/novo/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'create'));
