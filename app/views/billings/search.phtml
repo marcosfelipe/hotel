@@ -1,0 +1,109 @@
+<?= javascript_include_tag('billings/search.js'); ?>
+
+<div class="page-header" id="page-title">
+    <h1>Faturamento - Por período</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($billings_index_path(), 'Faturamento hoje'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-9">
+
+    <form method="POST" action="<?= $billings_search_path(); ?>">
+
+        <div>
+            <i>Digite um intervalo de datas.</i>
+        </div>
+        <div class="input-group col-lg-5">
+            <input type="text" class="form-control date" name="date1" value="<?= $this->date1->getValue(); ?>">
+        </div>
+        <div class="input-group col-lg-5">
+            <input type="text" class="form-control date" name="date2" value="<?= $this->date2->getValue(); ?>">
+        </div>
+        <div class="input-group col-lg-2">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+        </div>
+    </form>
+
+    <br>
+    <hr>
+
+    <div id="content-data">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Cód. Controle</th>
+                <th>Data</th>
+                <th>Hospedagem (Cód. Controle)</th>
+                <th>Tipo</th>
+                <th>Valor (R$)</th>
+            </tr>
+            </thead>
+            <?php
+            if ($this->billing['payments']):
+                foreach ($this->billing['payments'] as $payment): ?>
+                    <tr>
+                        <td>
+                            <?=
+                            link_to($payments_show_path($payment['payment_id']),
+                                $payment['control']); ?>
+                        </td>
+                        <td>
+                            <?= format_date($payment['created_at']); ?>
+                        </td>
+                        <td>
+                            <?=
+                            link_to($accommodations_show_path($payment['accommodation_id']),
+                                $payment['accommodation_control']); ?>
+                        </td>
+                        <td>
+                            <?=
+                            link_to($payment_types_show_path($payment['payment_type_id']),
+                                $payment['payment_type_description']); ?>
+                        </td>
+                        <td>
+                            <?= real_format($payment['price']); ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <b>Nota: </b>
+                            <?= $payment['note']; ?>
+                            <hr class="dashed">
+                        </td>
+                    </tr>
+
+                <?php
+                endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="5"><span class="label label-info">Nenhum pagamento efetuado!</span></td>
+                </tr>
+            <?php endif; ?>
+        </table>
+
+        <?php if ($this->billing['payments']): ?>
+            <h4 class="page-header">
+                Resumo de <?= $this->date1->getValue(); ?> à <?= $this->date2->getValue(); ?>
+            </h4>
+            <table class="table">
+                <tr>
+                    <td class="col-lg-3">Pagamentos:</td>
+                    <td><b><?= $this->billing['count']; ?></b></td>
+                </tr>
+                <tr>
+                    <td>Valor Total (R$):</td>
+                    <td><b><?= real_format($this->billing['total']); ?></b></td>
+                </tr>
+            </table>
+
+            <button id="generate_pdf" class="btn btn-primary">Gerar PDF</button>
+        <?php endif; ?>
+
+    </div>
+</div>

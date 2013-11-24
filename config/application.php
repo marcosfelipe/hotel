@@ -4,6 +4,7 @@ define('SITE_ROOT', '/hotel'); # com barras
 define('APP_ROOT_FOLDER', $_SERVER['DOCUMENT_ROOT'] . '/' . SITE_ROOT);
 
 define('ASSETS_FOLDER', SITE_ROOT . '/app/assets');
+define('FILES_FOLDER', SITE_ROOT . '/app/files');
 define('LOG_FILE', APP_ROOT_FOLDER . '/logs/application.log');
 define('VIEW_FOLDER', SITE_ROOT . '/app/views');
 define('DS', DIRECTORY_SEPARATOR);

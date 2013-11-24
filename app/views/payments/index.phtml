@@ -6,6 +6,8 @@
     <ul class="nav nav-pills nav-stacked">
         <li><?= link_to($payments_history_path(), 'Histórico'); ?></li>
         <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->countAccommodations}</span>"); ?></li>
+        <li><?= link_to($payment_types_index_path(), "Tipos de pagamento"); ?></li>
+        <li><?= link_to($billings_index_path(), "Faturamento"); ?></li>
     </ul>
 </div>
 

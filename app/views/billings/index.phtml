@@ -1,0 +1,63 @@
+<div class="page-header" id="page-title">
+    <h1>Faturamento</h1>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($billings_search_path(), 'Relatório por período'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <h4 class="page-header">
+        Faturamento de Hoje <?=$this->date; ?>
+    </h4>
+    <table class="table">
+        <tr>
+            <td class="col-lg-3">Pagamentos:</td>
+            <td><b><?=$this->todayBilling['count']; ?></b></td>
+        </tr>
+        <tr>
+            <td>Valor Total (R$):</td>
+            <td><b><?=real_format($this->todayBilling['total']); ?></b></td>
+        </tr>
+    </table>
+
+    <h4 class="page-header">
+        Por tipo de pagamento
+    </h4>
+    <table class="table">
+        <thead>
+        <th>Tipo</th>
+        <th>#</th>
+        <th>Valor total (R$)</th>
+        </thead>
+        <?php
+        if ($this->todayBilling['payments']):
+            foreach ($this->todayBilling['payments'] as $payment): ?>
+                <tr>
+                    <td>
+                        <?=
+                        link_to($payment_types_show_path($payment['payment_type_id']),
+                            $payment['payment_type_description']); ?>
+                    </td>
+                    <td>
+                        <?=$payment['count']; ?>
+                    </td>
+                    <td>
+                        <?=real_format($payment['total']); ?>
+                    </td>
+                </tr>
+
+            <?php
+            endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhum pagamento efetuado!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+
+
+</div>

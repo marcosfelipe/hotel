@@ -31,6 +31,10 @@ class Reservation extends Base
                     'message' => 'Campo obrigatório!'
                 ],
                 [
+                    'rule' => 'validDateTime',
+                    'message' => 'Data inválida!'
+                ],
+                [
                     'rule' => 'greaterNow',
                     'message' => 'Data inválida! Digite uma data maior que a data de agora.'
                 ]

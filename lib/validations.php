@@ -82,14 +82,24 @@
      */
     public static function greaterNow($value, $key = null, &$errors = null)
     {
+        if (!Utils::validDateTime($value, 'Y-m-d H:i:s')) {
+            $errors[$key] = 'a';
+            return false;
+        }
         if (!empty($value)) {
             if ($key !== null && $errors !== null) {
-                $now = new Datetime(date('Y-m-d H:i:s'));
-                $date = new Datetime($value);
-                if ($date < $now) {
+                try {
+                    $now = new Datetime(date('Y-m-d H:i:s'));
+                    $date = new Datetime($value);
+                    if ($date < $now) {
+                        $errors[$key] = 'a';
+                        return false;
+                    }
+                } catch (Exception $e) {
                     $errors[$key] = 'a';
                     return false;
                 }
+
             }
         }
         return true;
@@ -131,6 +141,39 @@
         pg_close($db_conn);
         return true;
     }
+
+    /* validDateTime valida se data e hora é verdadeiro
+    *
+    */
+    public static function validDateTime($value, $key = null, &$errors = null)
+    {
+        if (!empty($value)) {
+            if ($key !== null && $errors !== null) {
+                if (!Utils::validDateTime($value,'Y-m-d H:i:s')) {
+                    $errors[$key] = 'a';
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /* validDate valida se data é verdadeiro
+    *
+    */
+    public static function validDate($value, $key = null, &$errors = null)
+    {
+        if (!empty($value)) {
+            if ($key !== null && $errors !== null) {
+                if (!Utils::validDateTime($value,'Y-m-d')) {
+                    $errors[$key] = 'a';
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
 
 ?>

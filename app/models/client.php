@@ -28,7 +28,13 @@ class Client extends Base
         'rg',
         'enterprise_id',
         'active',
-        'birth' => [ 'type' => 'date', 'date_format' => 'd/m/Y' ],
+        'birth' => [ 'type' => 'date', 'date_format' => 'd/m/Y',
+            'validates' => [
+                'rule' => 'validDate',
+                'message' => 'Data inválida!
+                '
+            ]
+        ],
         'created_at'
     );
 

@@ -152,6 +152,18 @@ abstract class Base
                                     $this->{$key}->setError($validate['message']);
                                 }
                                 break;
+                            case 'validDateTime' :
+                                if (!Validations::validDateTime($this->{$key}->getValue(), $key, $this->errors)) {
+                                    $this->{$key}->setFlagError('error');
+                                    $this->{$key}->setError($validate['message']);
+                                }
+                                break;
+                            case 'validDate' :
+                                if (!Validations::validDate($this->{$key}->getValue(), $key, $this->errors)) {
+                                    $this->{$key}->setFlagError('error');
+                                    $this->{$key}->setError($validate['message']);
+                                }
+                                break;
                         }
                     }
                 }
@@ -265,13 +277,13 @@ abstract class Base
 
         $db_conn = Database::getConnection();
 
-        return pg_query_params($db_conn, $sql, $values);
+        return @pg_query_params($db_conn, $sql, $values);
 
     }
 
-    public function update($param = false)
+    public function update($param = false, $with_validates = true)
     {
-        if (!$this->isvalid()) return false;
+        if (!$this->isvalid() && $with_validates) return false;
 
         $fields_values = $param ? $param : $this->parseFieldsValues();
 
@@ -286,6 +298,7 @@ abstract class Base
 
         $sql = "update {$this->table} set
             " . implode(',', $data) . " where id = '{$this->id->getValue()}'";
+
 
         $db_conn = Database::getConnection();
         $resp = @pg_query_params($db_conn, $sql, $values);
@@ -474,12 +487,6 @@ abstract class Base
         return false;
     }
 
-}
-
-/** PERGUNTAR AO PROFESSOR */
-function __call($name, $arguments)
-{
-    // TODO: Implement __call() method.
 }
 
 ?>

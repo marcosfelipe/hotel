@@ -172,6 +172,12 @@ $router->get('/produtos-consumos/novo/:id', array('controller' => 'ProductConsum
 $router->post('/produtos-consumos/novo/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'create'));
 $router->get('/produtos-consumos/deletar/:id', array('controller' => 'ProductConsumptionsController', 'action' => 'destroy'));
 
+/* FATURAMENTO */
+$router->get('/faturamento', array('controller' => 'BillingsController', 'action' => 'index'));
+$router->get('/faturamento/por-periodo', array('controller' => 'BillingsController', 'action' => 'search'));
+$router->post('/faturamento/por-periodo', array('controller' => 'BillingsController', 'action' => 'search'));
+$router->post('/faturamento/gerar-pdf', array('controller' => 'BillingsController', 'action' => 'generate'));
+
 
 $router->load();
 ?>

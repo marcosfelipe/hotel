@@ -1,4 +1,7 @@
 <?php
+
+require_once 'vendor/utils.php';
+
 class Field
 {
 
@@ -52,14 +55,17 @@ class Field
     private function formatDate($date,$format = 'd/m/Y',$time = false)
     {
         if (strpos($date, '/') !== false && $time == false) {
+            if( !Utils::validDateTime($date, 'd/m/Y')) return $date;
             $_date = explode('/', $date);
             return $_date[2] . '-' . $_date[1] . '-' . $_date['0'];
         }elseif (strpos($date, '/') !== false && $time) {
+            if( !Utils::validDateTime($date)) return $date;
             $_date = explode('/', $date);
             $_time = explode(' ',$_date[2]);
             $_date[2] = $_time[0];
             return $_date[2] . '-' . $_date[1] . '-' . $_date['0'].' '.$_time[1];
         }elseif( !empty($date) ){
+            if( !Utils::validDateTime($date, $format)) return $date;
             return date( $format, strtotime($date));
         }
         return '';

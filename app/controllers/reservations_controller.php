@@ -75,7 +75,7 @@ class ReservationsController extends ApplicationController
     {
         $reservation = Reservation::find($this->params[':id']);
         $reservation->setData(['active' => 'false']);
-        if ($reservation->update()) {
+        if ($reservation->update(false,false)) {
             Flash::message('success', 'Reserva cancelada com sucesso!');
         } else {
             Flash::message('danger', 'Erro ao cancelar a reserva!');
