@@ -11,6 +11,8 @@ class AccommodationsController extends ApplicationController
         parent::beforeAction($action, $roles);
         $this->accounting = Accommodation::countActiveAccommodations();
         $this->now = date('d/m/Y H:i:s');
+        $this->month = '01'.date('/m/Y');
+        $this->date = date('d/m/Y');
     }
 
     public function index()
@@ -24,10 +26,15 @@ class AccommodationsController extends ApplicationController
         $this->countAccommodations = Accommodation::countActiveAccommodations();
         $this->accommodations = false;
         $this->search = new Field('search');
+        $this->date1 = new Field('date1',$this->month);
+        $this->date2 = new Field('date2', $this->date);
         if( isset( $this->params['search'] ) ){
-            $searching = $this->params['search'];
-            $this->search->setValue($searching);
-            $this->accommodations = Accommodation::like($searching);
+            $this->search->setValue($this->params['search']);
+            $this->date1->setValue($this->params['date1']);
+            $this->date2->setValue($this->params['date2']);
+            $this->accommodations = Accommodation::like($this->search->getValue(),
+                $this->date1->getValue(), $this->date2->getValue()
+            );
         }
     }
 
@@ -35,11 +42,15 @@ class AccommodationsController extends ApplicationController
     {
         //checkout hospedagem
         $accommodation = Accommodation::find($this->params[':id']);
-        $accommodation->setData(['check_out' => date('Y-m-d H:i:s')]);
-        //set false para active na reserva
-        $reservation = Reservation::find($accommodation->reservation_id->getValue());
-        $reservation->setData(['active' => 'false']);
-        if ($accommodation->hasPayment()) {
+        $has_check_out = $accommodation->check_out->getValue();
+        if( !empty($has_check_out) ){
+            Flash::message('danger','Esta hospedagem já possui check-out!');
+            $this->redirect_to($this->back());
+        }elseif ($accommodation->hasPayment()) {
+            $accommodation->setData(['check_out' => date('Y-m-d H:i:s')]);
+            //set false para active na reserva
+            $reservation = Reservation::find($accommodation->reservation_id->getValue());
+            $reservation->setData(['active' => 'false']);
             if ($accommodation->update() && $reservation->update()) {
                 Flash::message('success', 'Check-out efetuado com sucesso!
                     A hospedagem foi movida para o histórico.');

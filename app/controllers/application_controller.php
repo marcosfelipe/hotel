@@ -17,6 +17,7 @@
      */
     public function beforeAction($action,$actions = []){
         if ( count($actions)>0 ) {
+            if( !array_key_exists($action, $actions) && !array_key_exists('all',$actions) ) return;
             if( $this->currentUser() == null ){
                 Flash::message('danger','Você deve efetuar o login para acessar essa página!');
                 $this->redirect_to('/login');

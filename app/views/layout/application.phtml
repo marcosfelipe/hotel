@@ -25,6 +25,7 @@
             <li class="<?=activeClass('/home'); ?>"><?php echo link_to($home_index_path(), '<span class="glyphicon glyphicon-home"></span> Home'); ?></li>
             <li class="<?=activeClass('/fale-conosco'); ?>"><?php echo link_to($contacts_fresh_path(), '<span class="glyphicon glyphicon-hand-right"></span> Fale conosco'); ?></li>
             <li class="<?=activeClass('/sobre'); ?>"><?php echo link_to($home_about_path(), '<span class="glyphicon glyphicon-info-sign"></span> Sobre'); ?></li>
+            <li class="nav-divider"></li>
         </ul>
 
         <?php if ($this->currentUser()): ?>

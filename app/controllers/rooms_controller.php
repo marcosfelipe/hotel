@@ -3,11 +3,19 @@
 class RoomsController extends ApplicationController
 {
 
-    public function beforeAction($action){
+    public function beforeAction($action)
+    {
         $roles = [
-            'all' => 1,
+            'index' => 1,
+            'fresh' => 1,
+            'create' => 1,
+            'edit' => 1,
+            'update' => 1,
+            'destroy' => 1,
+            'show' => 1,
+            'verify' => 1,
         ];
-        parent::beforeAction($action,$roles);
+        parent::beforeAction($action, $roles);
     }
 
     public function index()
@@ -30,7 +38,7 @@ class RoomsController extends ApplicationController
     public function fresh()
     {
         $this->room = new Room();
-        $this->types = RoomType::allS( ['fields' => 'id as value,title as option']);
+        $this->types = RoomType::allS(['fields' => 'id as value,title as option']);
     }
 
     public function create()
@@ -76,10 +84,20 @@ class RoomsController extends ApplicationController
         $this->photos = RoomPhoto::where("room_id = '{$this->params[':id']}' ");
         $this->room = Room::findBelongs($this->params[':id'],
             ['belongs' => [
-                    ['table' => 'room_types', 'through' => 'room_type_id']
-                ]
+                ['table' => 'room_types', 'through' => 'room_type_id']
+            ]
             ]
         );
+    }
+
+    public function details()
+    {
+        $this->show();
+    }
+
+    public function listing()
+    {
+        $this->index();
     }
 
     public function edit()
@@ -88,7 +106,8 @@ class RoomsController extends ApplicationController
         $this->room = Room::find($this->params[':id']);
     }
 
-    public function verify(){
+    public function verify()
+    {
         $room = Room::find($this->params[':id']);
         $this->result = $room->hasReservation();
         $this->response_type = 'json';

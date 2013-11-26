@@ -2,10 +2,10 @@ Projeto
   Exemplo utilizado para ensinar desenvolvimento web na disciplina de Programação para Internet 2.
 
 Título do Projeto
-  Lista de TODO
+  INTEGRADOR
 
 Objetivo
-  Ensinar/Aprender Desenvolvimento web, OO, MVC e Desenvolvimento com Frameworks.
+   SISTEMA DE GERENCIAMENTO DE HOTELARIA
 
 Instalação
   Baixe o projeto na pasta /var/www (local de suas páginas web)
@@ -35,9 +35,5 @@ License
   MIT License. Copyright 2013-2013 Diego Marczal. http://marczal.com
 
 /********************************************************************************************************/
-
-NOTAS DA VERSÃO:
-    *Renderização automática de views
-    *Novo metodo de disponibilização de variaveis do controller para a view
 
 

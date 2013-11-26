@@ -1,13 +1,28 @@
-<div class="page-header">
+<div class="page-header" id="page-title">
     <h2>Fale conosco!</h2>
+    <h4>Entre em contato conosco, envie sua crítica, dúvida ou sugestão!</h4>
 </div>
-<div class="col-md-7 col-md-offset-2">
-    <form role="form" action="<?= $contacts_create_path() ?>" method="POST">
+<div class="row">
+    <div class="col-md-7 col-md-offset-2">
+        <form role="form" action="<?= $contacts_create_path() ?>" method="POST">
 
-        <?= text_field($this->contact->name, array('name' => 'contact', 'title' => 'Nome', 'placeholder' => 'Nome')); ?>
-        <?= text_field($this->contact->email, array('name' => 'contact', 'title' => 'E-mail', 'placeholder' => 'E-mail')); ?>
-        <?= text_area($this->contact->content, array('name' => 'contact', 'title' => 'Sugestão', 'placeholder' => 'Sugestão')); ?>
+            <?= text_field($this->contact->name, array('name' => 'contact', 'title' => 'Nome', 'placeholder' => 'Nome')); ?>
+            <?= text_field($this->contact->email, array('name' => 'contact', 'title' => 'E-mail', 'placeholder' => 'E-mail')); ?>
+            <?= text_area($this->contact->content, array('name' => 'contact', 'title' => 'Sugestão', 'placeholder' => 'Sugestão')); ?>
 
-        <button type="submit" class="btn btn-primary"> Confirmar</button>
-    </form>
+            <button type="submit" class="btn btn-primary"> Enviar</button>
+        </form>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="jumbotron col-lg-7 col-md-offset-2 well">
+
+        <h3>Ou entre em contato pelos endereços:</h3>
+        <h4>Central de reservas: <b>(42) 3036-0039</b> ou <b>(42) 9963-0675</b></h4>
+        <h4>E-mail: <b>hotelcampeao@hotmail.com</b></h4>
+        <h4>Atendimento 24h por dia, todos os dias da semana!</h4>
+    </div>
 </div>

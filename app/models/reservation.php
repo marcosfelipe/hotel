@@ -42,9 +42,15 @@ class Reservation extends Base
         ],
         'prevision_check_out' => [
             'type' => 'datetime',
-            'validate' => [
-                'rule' => 'greaterNow',
-                'message' => 'Data inválida! Digite uma data maior que a data de agora.'
+            'validates' => [
+                [
+                    'rule' => 'notEmpty',
+                    'message' => 'Campo obrigatório!'
+                ],
+                [
+                    'rule' => 'greaterNow',
+                    'message' => 'Data inválida! Digite uma data maior que a data de agora.'
+                ]
             ]
         ],
         'active',
@@ -129,17 +135,11 @@ class Reservation extends Base
     }
 
     /*
-     * seleciona todos as acomodações onde não tem reserva ativa
+     * seleciona todos as acomodações
      */
     public static function roomsForSelect()
     {
-        return Room::where(' id not in
-            ( select room_id from
-              reservations
-              INNER JOIN accommodations
-              ON accommodations.reservation_id = reservations.id
-              where active = true
-            ) ',
+        return Room::where(' active = true',
             ['fields' => 'id as value, number as option']
         );
     }

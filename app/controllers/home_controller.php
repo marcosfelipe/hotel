@@ -3,7 +3,8 @@
 
     public function index()
     {
-
+        $this->slide_rooms = RoomPhoto::getBestRooms();
+        $this->most_reserved = RoomPhoto::getMostReserved();
     }
 
 

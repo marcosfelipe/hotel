@@ -1,5 +1,8 @@
 <?php if( $this->result ): ?>
-    <p class="text-warning">Existe reserva para esta acomodação!</p>
+    <p class="text-warning">
+        Existe reserva para esta acomodação com previsão de check-out
+        para <?=format_date($this->result['prevision_check_out']); ?>
+    </p>
 <? else: ?>
     <p class="text-success">Acomodação disponível!</p>
 <? endif; ?>

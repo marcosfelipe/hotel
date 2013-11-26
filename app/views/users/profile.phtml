@@ -1,0 +1,19 @@
+<div class="page-header" id="page-title">
+    <h2>Perfil</h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($users_change_password_path(), 'Alterar senha'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <form role="form" action="<?=$users_update_path()?>" method="POST">
+        <?=text_field($this->user->name, array('name'=>'user', 'title'=>'Nome', 'placeholder'=>'Nome...')); ?>
+        <?=text_field($this->user->login, array('name'=>'user', 'title'=>'E-mail', 'placeholder' => 'email@servidor.com')); ?>
+        <button type="submit" class="btn btn-primary"> Alterar</button>
+    </form>
+
+</div>

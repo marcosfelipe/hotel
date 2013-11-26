@@ -26,7 +26,7 @@
     {
         if ($this->params['password'] == $this->params['password_confirmation'] && !empty($this->params['password'])) {
             $this->currentUser()->update(['password' => $this->params['password']]);
-            Flash::message('success', 'Senha criada com sucesso!');
+            Flash::message('success', 'Senha alterada com sucesso!');
             $this->redirect_to('/home');
         }
         Flash::message('danger', 'Insira uma senha válida nos dois campos!');

@@ -62,7 +62,9 @@ class ReservationsController extends ApplicationController
         $accommodation->setData([ 'reservation_id' => $this->params[':id'],
             'check_in' => date('Y-m-d H:i:s'),
             'control' => '20'.Utils::clear_str(microtime(true)) ]);
-        if ($accommodation->save()) {
+        if( $accommodation->hasCheckIn() ){
+            Flash::message('danger','Não foi possível efetuar o check-in pois existe hóspede na acomodação!');
+        }elseif ($accommodation->save()) {
             Flash::message('success', 'Check-in efetuado com sucesso!
                 A reserva foi movida para lista de hóspedes.');
         } else {

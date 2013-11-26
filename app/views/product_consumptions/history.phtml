@@ -10,37 +10,55 @@
 
 <div class="col-lg-8">
 
-    <form method="POST" action="<?= $product_consumptions_history_path(); ?>">
-        <div class="input-group">
-            <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
-                   placeholder="Pesquise numero de controle ou produto">
+    <div class="img-thumbnail">
+        <form method="POST" action="<?= $product_consumptions_history_path(); ?>">
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
+                           placeholder="Pesquise numero de controle ou produto">
+                </div>
+                <div class="col-lg-12">
+                    <i>Digite um intervalo de datas.</i>
+                </div>
+                <div class="input-group col-lg-5">
+                    <input type="text" class="form-control date" name="date1" value="<?= $this->date1->getValue(); ?>">
+                </div>
+                <div class="input-group col-lg-5">
+                    <input type="text" class="form-control date" name="date2" value="<?= $this->date2->getValue(); ?>">
+                </div>
+                <div class="input-group col-lg-2">
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
             </span>
-        </div>
-    </form>
-    <br>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <hr>
 
     <table class="table table-bordered table-hover">
         <thead>
-            <th class="col-lg-3">Data</th>
-            <th>Hospedagem (Cód. Controle)</th>
-            <th>Produto</th>
-            <th>Preço (R$)</th>
-            <th>Quantidade</th>
-            <th>Ação</th>
+        <th class="col-lg-3">Data</th>
+        <th>Hospedagem (Cód. Controle)</th>
+        <th>Produto</th>
+        <th>Preço (R$)</th>
+        <th>Quantidade</th>
+        <th>Ação</th>
         </thead>
         <?php
         if ($this->consumptions):
             foreach ($this->consumptions as $consumption): ?>
 
                 <tr>
-                    <td><?= format_date($consumption['created_at'],'d/m/Y H:i:s'); ?></td>
-                    <td><?=link_to($accommodations_show_path($consumption['accommodation_id']),
-                    $consumption['accommodation_control']); ?>
+                    <td><?= format_date($consumption['created_at'], 'd/m/Y H:i:s'); ?></td>
+                    <td><?=
+                        link_to($accommodations_show_path($consumption['accommodation_id']),
+                            $consumption['accommodation_control']); ?>
                     </td>
-                    <td><?=link_to($products_show_path($consumption['product_id']),
-                    $consumption['product_description']); ?>
+                    <td><?=
+                        link_to($products_show_path($consumption['product_id']),
+                            $consumption['product_description']); ?>
                     </td>
                     <td><?= real_format($consumption['price']); ?></td>
                     <td><?= $consumption['amount']; ?></td>
@@ -57,7 +75,7 @@
             </tr>
         <?php endif; ?>
         <tfoot>
-            <td colspan="6">Mostrando últimos 20 serviços</td>
+        <td colspan="6">Mostrando <?= $this->consumptions ? count($this->consumptions) : 0; ?> resgistro(s).</td>
         </tfoot>
     </table>
 </div>

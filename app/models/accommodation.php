@@ -171,10 +171,13 @@ class Accommodation extends Base
     }
 
     /* like para historico */
-    public static function like($value)
+    public static function like($value, $date1, $date2)
     {
-        if (!empty($value)) {
+
+        if (!empty($date1) && !empty($date2)) {
             $value = "%$value%";
+            $date1 = DateTime::createFromFormat('d/m/Y',$date1)->format('Y-m-d');
+            $date2 = DateTime::createFromFormat('d/m/Y',$date2)->format('Y-m-d');
             return self::joins(
                 'INNER JOIN reservations ON reservation_id = reservations.id
                  INNER JOIN clients ON client_id = clients.id
@@ -184,7 +187,8 @@ class Accommodation extends Base
                  AND accommodations.check_out IS NOT NULL
                  AND
                  ( CAST( accommodations.control AS TEXT) LIKE $1 OR CAST(rooms.number AS TEXT) LIKE $1
-                    OR clients.name LIKE $1 )
+                    OR clients.name LIKE $1 ) AND
+                    accommodations.check_out BETWEEN $2 AND $3
                  ORDER BY check_out DESC
                 ',
                 ['fields' =>
@@ -200,8 +204,23 @@ class Accommodation extends Base
                 accommodations.check_in as check_in,
                 accommodations.check_out as check_out,
                 accommodations.control as control
-                ', 'values' => [$value]]
+                ', 'values' => [$value, $date1, $date2]]
             );
+        }
+        return false;
+    }
+
+    //verifica se há ocupação da acomodação
+
+    public function hasCheckIn(){
+        $reservation = Reservation::find($this->reservation_id->getValue());
+        if( $reservation ){
+            $room = $reservation->room_id->getValue();
+            $count = self::joins('
+                INNER JOIN reservations ON reservations.id = accommodations.reservation_id
+                WHERE reservations.active = true AND reservations.room_id = $1
+                ',['values' => [$room]]);
+            return $count ? true : false;
         }
         return false;
     }

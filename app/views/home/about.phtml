@@ -1,17 +1,39 @@
-<div class="page-header">
-    <h2>Sobre</h2>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+<?= javascript_include_tag('home/about.js'); ?>
+<?= stylesheet_include_tag('home/about.css'); ?>
+
+
+<div class="container">
+    <div class="page-header" id="page-title">
+        <h2>Sobre</h2>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+
+            <h3>
+                <?= image_tag('photos', 'logo.png', 'original'); ?> Hotel Campeão
+            </h3>
+
+            <h2 class="page-header">Políticas</h2>
+            <h4>
+                <h3>Missão:</h3> Fazer com que nossos clientes sintam-se em casa com nosso ambiente familiar,
+                agregando conforto, qualidade e economia.
+                <h3>Visão:</h3> Ser reconhecido no setor pela diferença da apresentação.
+                <h3>valores:</h3> Ter sempre a preferência dos clientes com compromisso e simplicidade.
+            </h4>
+        </div>
+
+        <div class="col-lg-6">
+            <?=image_tag('photos','foto1.jpg','original'); ?>
+            <i>Imagem do site http://hotelcampeao.com.br</i>
+        </div>
+    </div>
+
+    <h2 class="page-header">Localização</h2>
+    <h4>Rua Dr. Laranjeiras, 853, Centro, Guarapuava - Paraná</h4>
+
+    <div id="map-canvas"></div>
+
+
 </div>
-<h4>A Empresa</h4>
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
-<h4>Políticas</h4>
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>

@@ -28,6 +28,7 @@ $router->get('/logout', array('controller' => 'SessionsController', 'action' => 
 /* MEU PERFIL */
 $router->get('/meu-perfil', array('controller' => 'UsersController', 'action' => 'edit'));
 $router->post('/meu-perfil', array('controller' => 'UsersController', 'action' => 'update'));
+$router->get('/mudar-senha', array('controller' => 'UsersController', 'action' => 'changePassword'));
 
 /* CRUD MOTIVOS */
 $router->get('/motivos', array('controller' => 'ReasonsController', 'action' => 'index'));
@@ -92,15 +93,18 @@ $router->get('/acomodacoes-tipos/novo', array('controller' => 'RoomTypesControll
 $router->get('/acomodacoes-tipos/editar/:id', array('controller' => 'RoomTypesController', 'action' => 'edit'));
 $router->post('/acomodacoes-tipos/editar/:id', array('controller' => 'RoomTypesController', 'action' => 'update'));
 $router->get('/acomodacoes-tipos/ver/:id', array('controller' => 'RoomTypesController', 'action' => 'show'));
+$router->post('/acomodacoes-tipos/preco/:id', array('controller' => 'RoomTypesController', 'action' => 'getTypePrice'));
 $router->get('/acomodacoes-tipos/deletar/:id', array('controller' => 'RoomTypesController', 'action' => 'destroy'));
 
 /* CRUD ACOMODAÇÕES */
 $router->get('/acomodacoes', array('controller' => 'RoomsController', 'action' => 'index'));
+$router->get('/acomodacoes/lista', array('controller' => 'RoomsController', 'action' => 'listing'));
 $router->post('/acomodacoes/novo', array('controller' => 'RoomsController', 'action' => 'create'));
 $router->get('/acomodacoes/novo', array('controller' => 'RoomsController', 'action' => 'fresh'));
 $router->get('/acomodacoes/editar/:id', array('controller' => 'RoomsController', 'action' => 'edit'));
 $router->post('/acomodacoes/editar/:id', array('controller' => 'RoomsController', 'action' => 'update'));
 $router->get('/acomodacoes/ver/:id', array('controller' => 'RoomsController', 'action' => 'show'));
+$router->get('/acomodacoes/detalhes/:id', array('controller' => 'RoomsController', 'action' => 'details'));
 $router->get('/acomodacoes/deletar/:id', array('controller' => 'RoomsController', 'action' => 'destroy'));
 $router->get('/acomodacoes/verificar/:id', array('controller' => 'RoomsController', 'action' => 'verify'));
 

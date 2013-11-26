@@ -104,10 +104,10 @@ class Billing extends ApplicationModel
         $mpdf->SetDisplayMode('fullpage');
         $mpdf->WriteHTML($html);
         $filename = date("ymdhis").'_faturamento.pdf';
-        $file = APP_ROOT_FOLDER.'/app/files/'.$filename;
+        $file = APP_ROOT_FOLDER.'/app/assets/files/'.$filename;
         $mpdf->Output($file, 'F');
 
-        return SITE_ROOT.'/app/files/'.$filename;
+        return SITE_ROOT.'/app/assets/files/'.$filename;
     }
 
 

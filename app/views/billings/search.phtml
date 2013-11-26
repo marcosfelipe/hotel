@@ -33,7 +33,7 @@
     <br>
     <hr>
 
-    <div id="content-data">
+    <div class="content-data">
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -86,8 +86,10 @@
                 </tr>
             <?php endif; ?>
         </table>
+    </div>
 
-        <?php if ($this->billing['payments']): ?>
+    <?php if ($this->billing['payments']): ?>
+        <div class="content-data">
             <h4 class="page-header">
                 Resumo de <?= $this->date1->getValue(); ?> à <?= $this->date2->getValue(); ?>
             </h4>
@@ -101,9 +103,7 @@
                     <td><b><?= real_format($this->billing['total']); ?></b></td>
                 </tr>
             </table>
-
-            <button id="generate_pdf" class="btn btn-primary">Gerar PDF</button>
-        <?php endif; ?>
-
-    </div>
+        </div>
+        <button id="generate_pdf" class="btn btn-primary">Gerar PDF</button>
+    <?php endif; ?>
 </div>

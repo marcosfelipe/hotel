@@ -1,0 +1,77 @@
+<?= stylesheet_include_tag('rooms/show.css'); ?>
+
+<div class="page-header" id="page-title">
+    <h2>Acomodação Nº <?= $this->room['rooms']['number'] ?></h2>
+</div>
+
+<div class="col-lg-3">
+    <ul class="nav nav-pills nav-stacked">
+        <li><?= link_to($rooms_listing_path(), 'Acomodações'); ?></li>
+    </ul>
+</div>
+
+<div class="col-lg-7">
+
+    <table class="table table-bordered">
+        <tr>
+            <td class="col-lg-3"><b>Número:</b></td>
+            <td><?= $this->room['rooms']['number'] ?></td>
+        <tr>
+        <tr>
+            <td><b>Andar:</b></td>
+            <td><?= $this->room['rooms']['floor'] ?></td>
+        <tr>
+        <tr>
+            <td><b>Valor da diária (R$):</b></td>
+            <td><?= real_format($this->room['rooms']['price']) ?></td>
+        <tr>
+        <tr>
+            <td><b>Categoria:</b></td>
+            <td><?= @$this->room['room_types']['title']; ?></td>
+        <tr>
+            <td><b>Descrição:</b></td>
+            <td><?= $this->room['rooms']['description']; ?></td>
+        </tr>
+    </table>
+
+    <h3 class="page-header">Fotos</h3>
+
+    <article class="photos">
+
+        <div class="clearfix">
+            <?php
+            if ($this->photos):
+                foreach ($this->photos as $photo):
+                    ?>
+
+                    <div class="pull-left image-content">
+
+                        <a href="#" data-toggle="modal" data-target="#<?= $photo['id'] ?>">
+                            <?= image_tag('photos', $photo['name'], 'thumb', 'class="img-thumbnail"') ?>
+                        </a>
+
+                        <div class="modal fade" id="<?= $photo['id'] ?>">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <?= image_tag('photos', $photo['name'], 'original', 'class="img-thumbnail"') ?>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+
+                    </div>
+                <?php endforeach; else: ?>
+                <span class="label label-info">Nenhuma foto encontrada!</span>
+            <?php endif; ?>
+
+
+        </div>
+
+
+    </article>
+
+</div>

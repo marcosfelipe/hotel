@@ -11,12 +11,25 @@
 <div class="col-lg-8">
 
     <form method="POST" action="<?= $accommodations_history_path(); ?>">
-        <div class="input-group">
-            <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
-                placeholder="Pesquise numero de controle, acomodação ou cliente">
+        <div class="row">
+            <div class="col-lg-12">
+                <input type="text" class="form-control" name="search" value="<?= $this->search->getValue(); ?>"
+                       placeholder="Pesquise numero de controle, acomodação ou cliente">
+            </div>
+            <div class="col-lg-12">
+                <i>Digite um intervalo de datas de check-out.</i>
+            </div>
+            <div class="input-group col-lg-5">
+                <input type="text" class="form-control date" name="date1" value="<?= $this->date1->getValue(); ?>">
+            </div>
+            <div class="input-group col-lg-5">
+                <input type="text" class="form-control date" name="date2" value="<?= $this->date2->getValue(); ?>">
+            </div>
+            <div class="input-group col-lg-2">
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
             </span>
+            </div>
         </div>
     </form>
 
@@ -28,7 +41,7 @@
         <th>Acomodação</th>
         <th>Cliente</th>
         <th>Check-in</th>
-        <th>Check-out</th>
+        <th class="warning">Check-out</th>
         <th class="col-lg-3">Ações</th>
         </thead>
         <?php

@@ -58,4 +58,10 @@ class RoomTypesController extends ApplicationController{
         $this->type = RoomType::find($this->params[':id']);
     }
 
+    public function getTypePrice(){
+        $this->type = RoomType::find($this->params['id']);
+        $this->response_type = 'json';
+        $this->view = 'room_types/get_type_price';
+    }
+
 }

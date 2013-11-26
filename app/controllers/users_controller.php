@@ -3,46 +3,28 @@
 class UsersController extends ApplicationController
 {
 
-
-    public function _new()
-    {
-        $this->render(array('view' => 'users/fresh.phtml',
-            'user' => new User()));
+    public function edit(){
+        $this->user = User::find($this->currentUser()->id->getValue(),['table' => 'employees']);
+        $this->view = 'users/profile';
     }
 
-    public function create()
-    {
-        $user = new User($this->params['user']);
-        if ($user->save()) {
-            Flash::message('success', 'Registro realizado com sucesso!');
-            $this->redirect_to('/login');
+    public function update(){
+        $this->user = User::find($this->currentUser()->id->getValue(),['table' => 'employees']);
+        $this->user->setData($this->params['user']);
+        if ($this->user->update()) {
+            Flash::message('success', 'Perfil editado com sucesso!');
         } else {
-            Flash::message('danger', 'Existe dados incorretos no seu formulário!');
-            $this->render(array('view' => 'users/fresh.phtml',
-                'layout' => 'layout/unauthenticated.phtml',
-                'user' => $user));
+            Flash::message('danger', 'O formulário contém erros!');
         }
+        $this->view = 'users/profile';
     }
 
-    public function edit()
-    {
-        $this->render(array('view' => 'users/edit.phtml',
-            'user' => $this->currentUser()));
-
+    public function changePassword(){
+        $token = time();
+        $_SESSION['pass_token'] = $token;
+        $this->redirect_to("/nova-senha");
     }
 
-    public function update()
-    {
-        $user = $this->currentUser();
-
-        if ($user->update($this->params['user'])) {
-            Flash::message('success', ' Atualização realizada com sucesso!');
-            $this->redirect_to('/');
-        } else {
-            Flash::message('danger', 'Existe dados incorretos no seu formulário!');
-            $this->render(array('view' => 'users/edit.phtml', 'user' => $user));
-        }
-    }
 }
 
 ?>

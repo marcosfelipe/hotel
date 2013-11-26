@@ -359,7 +359,7 @@ abstract class Base
         $sql = "select {$params['fields']} from {$params['table']} " . $sql . ($params['limit'] > 0 ? ' limit ' . $params['limit'] : '');
 
         $db_conn = Database::getConnection();
-        $query = pg_query_params($db_conn, $sql,$params['values']);
+        $query = @pg_query_params($db_conn, $sql,$params['values']);
 
         return @pg_fetch_all($query);
 
@@ -427,7 +427,7 @@ abstract class Base
         $sql = "select {$params['fields']} from {$params['table']} where {$sql} ".($params['limit'] == null ? '' : $params['limit']);
 
         $db_conn = Database::getConnection();
-        $query = pg_query_params($db_conn, $sql, $params['values']);
+        $query = @pg_query_params($db_conn, $sql, $params['values']);
         return @pg_fetch_all($query);
     }
 

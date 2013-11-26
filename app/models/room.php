@@ -40,13 +40,17 @@ class Room extends Base
         return self::where('active = true',['fields' => 'id as value, number as option']);
     }
 
+    /*seleciona as reservas do quarto onde
+    * tem a maxima previsão de check-out
+    */
     public function hasReservation(){
         $id = $this->id->getValue();
         $count = Reservation::where('active = true
-            AND room_id = $1',
+            AND room_id = $1
+            ORDER BY prevision_check_out DESC',
             ['values' => [$id] ]
         );
-        return $count ? true : false;
+        return $count ? $count[0] : false;
     }
 
 }

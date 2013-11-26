@@ -5,9 +5,11 @@
 <div class="col-lg-3">
     <ul class="nav nav-pills nav-stacked">
         <li><?= link_to($accommodations_index_path(), "Hóspedes <span class='badge'>{$this->accounting}</span>"); ?></li>
+        <?php if( $this->accommodation->check_out->getValue() == ''):?>
         <li><?=
             link_to($accommodations_check_out_path($this->accommodation->id->getValue()),
                 'Check-out', 'data-confirm="Tem certeza?"'); ?></li>
+        <? endif; ?>
         <li><?=
             link_to($accommodations_payment_path($this->accommodation->id->getValue()),
                 'Pagamento'); ?></li>

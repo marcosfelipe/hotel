@@ -63,6 +63,35 @@ class RoomPhoto extends Base
         return unlink($original) && unlink($thumb);
     }
 
+    /* para slide show */
+    public static function getBestRooms(){
+
+        $rooms = Room::joins('
+            INNER JOIN room_photos ON room_photos.room_id = rooms.id
+            ORDER BY room_id, rooms.price DESC
+            LIMIT 3
+        ',['fields' => 'distinct on (room_id) room_id, name, rooms.price,
+            rooms.description as room_description,
+            rooms.number as room_number
+        ']);
+        return $rooms;
+    }
+
+    /* os mais reservados */
+    public static function getMostReserved(){
+        $rooms = Reservation::joins('
+            INNER JOIN rooms ON rooms.id = reservations.room_id
+            LEFT JOIN room_photos ON reservations.room_id = room_photos.room_id
+            GROUP BY reservations.room_id, rooms.number, room_photos.name, rooms.description
+            ORDER BY reservations.room_id, count DESC
+            LIMIT 3
+        ',['fields' => '
+            distinct on (reservations.room_id) reservations.room_id,
+            rooms.number, room_photos.name, rooms.description, count(*)
+        ']);
+        return $rooms;
+    }
+
 }
 
 ?>

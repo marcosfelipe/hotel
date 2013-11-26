@@ -15,6 +15,8 @@ class ProductConsumptionsController extends ApplicationController
         ];
         parent::beforeAction($action, $roles);
         $this->countAccommodations = Accommodation::countActiveAccommodations();
+        $this->month = '01'.date('/m/Y');
+        $this->date = date('d/m/Y');
     }
 
     public function index()
@@ -25,10 +27,15 @@ class ProductConsumptionsController extends ApplicationController
     public function history(){
         $this->consumptions= false;
         $this->search = new Field('search');
+        $this->date1 = new Field('date1',$this->month);
+        $this->date2 = new Field('date2', $this->date);
         if( isset( $this->params['search'] ) ){
             $searching = $this->params['search'];
             $this->search->setValue($searching);
-            $this->consumptions = ProductConsumption::like($searching);
+            $this->date1->setValue($this->params['date1']);
+            $this->date2->setValue($this->params['date2']);
+            $this->consumptions = ProductConsumption::like($searching,$this->date1->getValue(),
+                $this->date2->getValue());
         }
     }
 

@@ -1,0 +1,44 @@
+<div class="page-header" id="page-title">
+    <h1>Todas as acomodações</h1>
+</div>
+
+
+<div class="col-lg-12 center-container">
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <th>#</th>
+            <th>Número</th>
+            <th>Andar</th>
+            <th>Tipo</th>
+            <th colspan="2">Preço</th>
+        </thead>
+        <?php
+        $n = 1;
+        if ($this->rooms):
+            foreach ($this->rooms as $room): ?>
+
+                <tr class="<?=$room['reservation_id']?'danger':'success'; ?>">
+                    <td><?= $n; ?></td>
+                    <td><?= $room['room_number']; ?></td>
+                    <td><?= $room['room_floor']; ?></td>
+                    <td><?= $room['room_type_title']; ?></td>
+                    <td><?= real_format($room['room_price']); ?></td>
+                    <td class="col-md-1">
+                        <?= link_to( $rooms_details_path($room['room_id']), 'detalhes'); ?>
+                    </td>
+                </tr>
+
+                <?php
+                $n++;
+            endforeach; else: ?>
+            <tr>
+                <td colspan="5"><span class="label label-info">Nenhuma acomodação encontrada!</span></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+
+
+    <span class="label label-success">&nbsp;</span> Disponível
+    <span class="label label-danger">&nbsp;</span> Reservada
+</div>
